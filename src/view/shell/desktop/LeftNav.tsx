@@ -21,6 +21,7 @@ import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {isInvalidHandle, sanitizeHandle} from '#/lib/strings/handles'
 import {emitSoftReset} from '#/state/events'
 import {useHomeBadge} from '#/state/home-badge'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useFetchHandle} from '#/state/queries/handle'
 import {useUnreadMessageCount} from '#/state/queries/messages/list-conversations'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
@@ -103,6 +104,8 @@ function ProfileCard() {
 
   const {isActive: live} = useActorStatus(profile)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View style={[a.my_md, !leftNavMinimal && [a.w_full, a.align_start]]}>
       {!isLoading && profile ? (
@@ -118,7 +121,7 @@ function ProfileCard() {
                     a.w_full,
                     a.transition_color,
                     active ? t.atoms.bg_contrast_25 : a.transition_delay_50ms,
-                    a.rounded_full,
+                    enableSquareButtons ? a.rounded_sm : a.rounded_full,
                     a.justify_between,
                     a.align_center,
                     a.flex_row,
@@ -379,6 +382,9 @@ function NavItem({count, hasNew, href, icon, iconFilled, label}: NavItemProps) {
   const {currentAccount} = useSession()
   const {leftNavMinimal} = useLayoutBreakpoints()
   const [pathName] = useMemo(() => router.matchPath(href), [href])
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   const currentRouteInfo = useNavigationState(state => {
     if (!state) {
       return {name: 'Home'}
@@ -465,7 +471,7 @@ function NavItem({count, hasNew, href, icon, iconFilled, label}: NavItemProps) {
                 a.absolute,
                 a.text_xs,
                 a.font_semi_bold,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 a.text_center,
                 a.leading_tight,
                 a.z_20,
@@ -493,7 +499,7 @@ function NavItem({count, hasNew, href, icon, iconFilled, label}: NavItemProps) {
           <View
             style={[
               a.absolute,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               a.z_20,
               {
                 backgroundColor: t.palette.primary_500,
@@ -527,6 +533,8 @@ function ComposeBtn() {
   const {leftNavMinimal} = useLayoutBreakpoints()
   const [isFetchingHandle, setIsFetchingHandle] = useState(false)
   const fetchHandle = useFetchHandle()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const getProfileHandle = async () => {
     const routes = getState()?.routes
@@ -577,7 +585,7 @@ function ComposeBtn() {
         size="large"
         variant="solid"
         color="primary"
-        style={[a.rounded_full]}>
+        style={enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]}>
         <ButtonIcon icon={EditBig} position="left" />
         <ButtonText>
           <Trans context="action">New Post</Trans>

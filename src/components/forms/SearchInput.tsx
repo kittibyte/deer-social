@@ -5,6 +5,7 @@ import {useLingui} from '@lingui/react'
 
 import {HITSLOP_10} from '#/lib/constants'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
 import * as TextField from '#/components/forms/TextField'
@@ -24,6 +25,8 @@ export const SearchInput = React.forwardRef<TextInput, SearchInputProps>(
     const t = useTheme()
     const {_} = useLingui()
     const showClear = value && value.length > 0
+
+    const enableSquareButtons = useEnableSquareButtons()
 
     return (
       <View style={[a.w_full, a.relative]}>
@@ -70,7 +73,7 @@ export const SearchInput = React.forwardRef<TextInput, SearchInputProps>(
               label={_(msg`Clear search query`)}
               hitSlop={HITSLOP_10}
               size="tiny"
-              shape="round"
+              shape={enableSquareButtons ? 'square' : 'round'}
               variant="ghost"
               color="secondary">
               <ButtonIcon icon={X} size="xs" />

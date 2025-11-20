@@ -9,6 +9,7 @@ import {openCamera} from '#/lib/media/picker'
 import {logger} from '#/logger'
 import {isMobileWeb, isNative} from '#/platform/detection'
 import {type ComposerImage, createComposerImage} from '#/state/gallery'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button} from '#/components/Button'
 import {Camera_Stroke2_Corner0_Rounded as Camera} from '#/components/icons/Camera'
@@ -24,6 +25,8 @@ export function OpenCameraBtn({disabled, onAdd}: Props) {
   const [mediaPermissionRes, requestMediaPermission] =
     MediaLibrary.usePermissions({granularPermissions: ['photo']})
   const t = useTheme()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPressTakePicture = useCallback(async () => {
     try {
@@ -71,7 +74,7 @@ export function OpenCameraBtn({disabled, onAdd}: Props) {
       accessibilityHint={_(msg`Opens camera on device`)}
       style={a.p_sm}
       variant="ghost"
-      shape="round"
+      shape={enableSquareButtons ? 'square' : 'round'}
       color="primary"
       disabled={disabled}>
       <Camera size="lg" style={disabled && t.atoms.text_contrast_low} />

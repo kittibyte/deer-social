@@ -1,12 +1,14 @@
 import {View} from 'react-native'
 import {Trans} from '@lingui/macro'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {Logo} from '#/view/icons/Logo'
 import {atoms as a, useTheme} from '#/alf'
 import {Text} from '#/components/Typography'
 
 export function Badge() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View style={[a.align_start]}>
       <View
@@ -14,7 +16,7 @@ export function Badge() {
           a.pl_md,
           a.pr_lg,
           a.py_sm,
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           a.flex_row,
           a.align_center,
           a.gap_xs,

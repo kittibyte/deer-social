@@ -86,6 +86,7 @@ import {
 } from '#/state/gallery'
 import {useModalControls} from '#/state/modals'
 import {useRequireAltTextEnabled} from '#/state/preferences'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   fromPostLanguages,
   toPostLanguages,
@@ -855,6 +856,8 @@ let ComposerPost = React.memo(function ComposerPost({
     : _(msg`What's up?`)
   const discardPromptControl = Prompt.usePromptControl()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const dispatchPost = useCallback(
     (action: PostAction) => {
       dispatch({
@@ -968,7 +971,7 @@ let ComposerPost = React.memo(function ComposerPost({
             size="small"
             color="secondary"
             variant="ghost"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             style={[a.absolute, {top: 0, right: 0}]}
             onPress={() => {
               if (
@@ -1039,6 +1042,9 @@ function ComposerTopBar({
 }) {
   const pal = usePalette('default')
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <Animated.View
       style={topBarAnimatedStyle}
@@ -1050,7 +1056,11 @@ function ComposerTopBar({
           color="primary"
           shape="default"
           size="small"
-          style={[a.rounded_full, a.py_sm, {paddingLeft: 7, paddingRight: 7}]}
+          style={[
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
+            a.py_sm,
+            {paddingLeft: 7, paddingRight: 7},
+          ]}
           onPress={onCancel}
           accessibilityHint={_(
             msg`Closes post composer and discards post draft`,
@@ -1107,7 +1117,10 @@ function ComposerTopBar({
             color="primary"
             shape="default"
             size="small"
-            style={[a.rounded_full, a.py_sm]}
+            style={[
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
+              a.py_sm,
+            ]}
             onPress={onPublish}
             disabled={!canPost || isPublishQueued}>
             <ButtonText style={[a.text_md]}>
@@ -1365,6 +1378,8 @@ function ComposerFooter({
   let selectedAssetsCount = 0
   let isMediaSelectionDisabled = false
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   if (media?.type === 'images') {
     isMediaSelectionDisabled = isMaxImages
     selectedAssetsCount = images.length
@@ -1476,7 +1491,7 @@ function ComposerFooter({
                   label={_(msg`Open emoji picker`)}
                   accessibilityHint={_(msg`Opens emoji picker`)}
                   variant="ghost"
-                  shape="round"
+                  shape={enableSquareButtons ? 'square' : 'round'}
                   color="primary">
                   <EmojiSmileIcon size="lg" />
                 </Button>
@@ -1492,7 +1507,7 @@ function ComposerFooter({
             onPress={onAddPost}
             style={[a.p_sm]}
             variant="ghost"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             color="primary">
             <PlusIcon size="lg" />
           </Button>
@@ -1774,6 +1789,8 @@ function ErrorBanner({
   const t = useTheme()
   const {_} = useLingui()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const videoError =
     videoState.status === 'error' ? videoState.error : undefined
   const error = standardError || videoError
@@ -1811,7 +1828,7 @@ function ErrorBanner({
             size="tiny"
             color="secondary"
             variant="ghost"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             style={[a.absolute, {top: 0, right: 0}]}
             onPress={onClearError}>
             <ButtonIcon icon={XIcon} />

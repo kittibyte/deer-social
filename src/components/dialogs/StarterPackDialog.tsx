@@ -13,6 +13,7 @@ import {useRequireEmailVerification} from '#/lib/hooks/useRequireEmailVerificati
 import {type NavigationProp} from '#/lib/routes/types'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   invalidateActorStarterPacksWithMembershipQuery,
   useActorStarterPacksWithMembershipsQuery,
@@ -132,6 +133,8 @@ function StarterPackList({
   const control = Dialog.useDialogContext()
   const {_} = useLingui()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const {
     data,
     isError,
@@ -181,7 +184,7 @@ function StarterPackList({
           variant="ghost"
           color="secondary"
           size="small"
-          shape="round">
+          shape={enableSquareButtons ? 'square' : 'round'}>
           <ButtonIcon icon={XIcon} />
         </Button>
       </View>

@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import {type NavigationProp} from '#/lib/routes/types'
 import {type Shadow} from '#/state/cache/types'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useConvoQuery,
   useMarkAsReadMutation,
@@ -70,6 +71,8 @@ let ConvoMenu = ({
 
   const {listBlocks} = blockInfo
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <>
       <Menu.Root control={control}>
@@ -86,7 +89,7 @@ let ConvoMenu = ({
                   }}
                   size="small"
                   color="secondary"
-                  shape="round"
+                  shape={enableSquareButtons ? 'square' : 'round'}
                   variant="ghost"
                   style={[a.bg_transparent]}>
                   <ButtonIcon icon={DotsHorizontal} size="md" />

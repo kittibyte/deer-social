@@ -9,6 +9,7 @@ import {useMinimalShellFabTransform} from '#/lib/hooks/useMinimalShellTransform'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {clamp} from '#/lib/numbers'
 import {useGate} from '#/lib/statsig/statsig'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSession} from '#/state/session'
 import {atoms as a, useLayoutBreakpoints, useTheme, web} from '#/alf'
 import {useInteractionState} from '#/components/hooks/useInteractionState'
@@ -31,6 +32,7 @@ export function LoadLatestBtn({
   const fabMinimalShellTransform = useMinimalShellFabTransform()
   const insets = useSafeAreaInsets()
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   const {
     state: hovered,
     onIn: onHoverIn,
@@ -77,7 +79,7 @@ export function LoadLatestBtn({
             width: 42,
             height: 42,
           },
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           a.align_center,
           a.justify_center,
           a.border,
@@ -91,7 +93,10 @@ export function LoadLatestBtn({
         targetScale={0.9}
         onPointerEnter={onHoverIn}
         onPointerLeave={onHoverOut}>
-        <SubtleHover hover={hovered} style={[a.rounded_full]} />
+        <SubtleHover
+          hover={hovered}
+          style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
+        />
         <ArrowIcon
           size="md"
           style={[

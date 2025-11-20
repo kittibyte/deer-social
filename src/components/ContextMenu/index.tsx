@@ -50,6 +50,7 @@ import {useHaptics} from '#/lib/haptics'
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {logger} from '#/logger'
 import {isAndroid, isIOS} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, platform, tokens, useTheme} from '#/alf'
 import {
   Context,
@@ -824,12 +825,13 @@ export function ItemIcon({icon: Comp}: ItemIconProps) {
 
 export function ItemRadio({selected}: {selected: boolean}) {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
         a.justify_center,
         a.align_center,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         t.atoms.border_contrast_high,
         {
           borderWidth: 1,
@@ -841,7 +843,7 @@ export function ItemRadio({selected}: {selected: boolean}) {
         <View
           style={[
             a.absolute,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             {height: 14, width: 14},
             selected ? {backgroundColor: t.palette.primary_500} : {},
           ]}

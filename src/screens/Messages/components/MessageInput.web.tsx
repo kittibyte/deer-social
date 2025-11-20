@@ -13,6 +13,7 @@ import {
   useMessageDraft,
   useSaveMessageDraft,
 } from '#/state/messages/message-drafts'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {textInputWebEmitter} from '#/view/com/composer/text-input/textInputWebEmitter'
 import {
   type Emoji,
@@ -51,6 +52,8 @@ export function MessageInput({
   const [isHovered, setIsHovered] = React.useState(false)
   const [textAreaHeight, setTextAreaHeight] = React.useState(38)
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onSubmit = React.useCallback(() => {
     if (!hasEmbed && message.trim() === '') {
@@ -168,7 +171,7 @@ export function MessageInput({
             })
           }}
           style={[
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             a.overflow_hidden,
             a.align_center,
             a.justify_center,
@@ -235,7 +238,7 @@ export function MessageInput({
           accessibilityLabel={_(msg`Send message`)}
           accessibilityHint=""
           style={[
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             a.align_center,
             a.justify_center,
             {

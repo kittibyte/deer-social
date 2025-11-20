@@ -11,6 +11,7 @@ import {useLingui} from '@lingui/react'
 import {DropdownMenu} from 'radix-ui'
 
 import {useA11y} from '#/state/a11y'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, flatten, useTheme, web} from '#/alf'
 import type * as Dialog from '#/components/Dialog'
 import {useInteractionState} from '#/components/hooks/useInteractionState'
@@ -330,12 +331,13 @@ export function ItemIcon({icon: Comp, position = 'left'}: ItemIconProps) {
 
 export function ItemRadio({selected}: {selected: boolean}) {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
         a.justify_center,
         a.align_center,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         t.atoms.border_contrast_high,
         {
           borderWidth: 1,
@@ -347,7 +349,7 @@ export function ItemRadio({selected}: {selected: boolean}) {
         <View
           style={[
             a.absolute,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             {height: 14, width: 14},
             selected
               ? {

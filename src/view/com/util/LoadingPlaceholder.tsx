@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 
 import {s} from '#/lib/styles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Bubble_Stroke2_Corner2_Rounded as Bubble} from '#/components/icons/Bubble'
 import {
@@ -277,9 +278,14 @@ export function ChatListItemLoadingPlaceholder({
 }) {
   const t = useTheme()
   const random = useMemo(() => Math.random(), [])
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View style={[a.flex_row, a.gap_md, a.px_lg, a.mt_lg, t.atoms.bg, style]}>
-      <LoadingPlaceholder width={52} height={52} style={a.rounded_full} />
+      <LoadingPlaceholder
+        width={52}
+        height={52}
+        style={enableSquareButtons ? a.rounded_sm : a.rounded_full}
+      />
       <View>
         <LoadingPlaceholder width={140} height={12} style={a.mt_xs} />
         <LoadingPlaceholder width={120} height={8} style={a.mt_sm} />

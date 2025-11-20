@@ -8,6 +8,7 @@ import {useEnforceMaxGraphemeCount} from '#/lib/strings/helpers'
 import {LANGUAGES} from '#/locale/languages'
 import {isWeb} from '#/platform/detection'
 import {useLanguagePrefs} from '#/state/preferences'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
@@ -212,6 +213,8 @@ function SubtitleFileRow({
     [setCaptions, language],
   )
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={[
@@ -260,7 +263,7 @@ function SubtitleFileRow({
       <Button
         label={_(msg`Remove subtitle file`)}
         size="tiny"
-        shape="round"
+        shape={enableSquareButtons ? 'square' : 'round'}
         variant="outline"
         color="secondary"
         onPress={() =>

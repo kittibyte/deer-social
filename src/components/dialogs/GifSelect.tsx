@@ -14,6 +14,7 @@ import {useLingui} from '@lingui/react'
 import {logEvent} from '#/lib/statsig/statsig'
 import {cleanError} from '#/lib/strings/errors'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   type Gif,
   tenorUrlToBskyGifUrl,
@@ -97,6 +98,8 @@ function GifList({
   const trendingQuery = useFeaturedGifsQuery()
   const searchQuery = useGifSearchQuery(search)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const {
     data,
     fetchNextPage,
@@ -154,7 +157,7 @@ function GifList({
             size="small"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             onPress={() => control.close()}
             label={_(msg`Close GIF dialog`)}>
             <ButtonIcon icon={Arrow} size="md" />
@@ -183,7 +186,7 @@ function GifList({
         </TextField.Root>
       </View>
     )
-  }, [gtMobile, t.atoms.bg, _, control])
+  }, [gtMobile, t.atoms.bg, _, control, enableSquareButtons])
 
   return (
     <>

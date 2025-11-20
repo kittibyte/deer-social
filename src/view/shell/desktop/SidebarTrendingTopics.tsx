@@ -4,6 +4,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {logEvent} from '#/lib/statsig/statsig'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useTrendingSettings,
   useTrendingSettingsApi,
@@ -39,6 +40,8 @@ function Inner() {
   const {data: trending, error, isLoading} = useTrendingTopics()
   const noTopics = !isLoading && !error && !trending?.topics?.length
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onConfirmHide = React.useCallback(() => {
     logEvent('trendingTopics:hide', {context: 'sidebar'})
     setTrendingDisabled(true)
@@ -63,7 +66,7 @@ function Inner() {
             size="tiny"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             onPress={() => trendingPrompt.open()}>
             <ButtonIcon icon={X} />
           </Button>
@@ -82,7 +85,7 @@ function Inner() {
                 <TrendingTopicLink
                   key={topic.link}
                   topic={topic}
-                  style={a.rounded_full}
+                  style={enableSquareButtons ? a.rounded_sm : a.rounded_full}
                   onPress={() => {
                     logEvent('trendingTopic:click', {context: 'sidebar'})
                   }}>

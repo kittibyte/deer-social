@@ -5,6 +5,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {PressableScale} from '#/lib/custom-animations/PressableScale'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 // import {makeProfileLink} from '#/lib/routes/links'
 // import {feedUriToHref} from '#/lib/strings/url-helpers'
 // import {Hashtag_Stroke2_Corner0_Rounded as Hashtag} from '#/components/icons/Hashtag'
@@ -28,12 +29,14 @@ export function TrendingTopic({
   const hasIcon = topic.type === 'starter-pack' && !isSmall
   const iconSize = 20
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={[
         a.flex_row,
         a.align_center,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         a.border,
         t.atoms.border_contrast_medium,
         t.atoms.bg,
@@ -110,10 +113,13 @@ export function TrendingTopicSkeleton({
 }) {
   const t = useTheme()
   const isSmall = size === 'small'
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={[
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         a.border,
         t.atoms.border_contrast_medium,
         t.atoms.bg_contrast_25,

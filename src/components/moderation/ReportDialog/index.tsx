@@ -10,6 +10,7 @@ import {getLabelingServiceTitle} from '#/lib/moderation'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {Logger} from '#/logger'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useMyLabelersQuery} from '#/state/queries/preferences'
 import {CharProgress} from '#/view/com/composer/char-progress/CharProgress'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
@@ -105,6 +106,8 @@ function Inner(props: ReportDialogProps) {
   const copy = useCopyForSubject(props.subject)
   const {categories, getCategory} = useReportOptions()
   const [state, dispatch] = React.useReducer(reducer, initialState)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   /**
    * Submission handling
@@ -290,7 +293,7 @@ function Inner(props: ReportDialogProps) {
                     size="tiny"
                     variant="solid"
                     color="secondary"
-                    shape="round"
+                    shape={enableSquareButtons ? 'square' : 'round'}
                     onPress={() => {
                       dispatch({type: 'clearCategory'})
                     }}>
@@ -370,7 +373,7 @@ function Inner(props: ReportDialogProps) {
                 size="tiny"
                 variant="solid"
                 color="secondary"
-                shape="round"
+                shape={enableSquareButtons ? 'square' : 'round'}
                 onPress={() => {
                   dispatch({type: 'clearOption'})
                 }}>
@@ -425,7 +428,7 @@ function Inner(props: ReportDialogProps) {
                           size="tiny"
                           variant="solid"
                           color="secondary"
-                          shape="round"
+                          shape={enableSquareButtons ? 'square' : 'round'}
                           onPress={() => {
                             dispatch({type: 'clearLabeler'})
                           }}>
@@ -605,13 +608,14 @@ function StepTitle({
   const t = useTheme()
   const active = activeIndex1 === index
   const completed = activeIndex1 > index
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View style={[a.flex_row, a.gap_sm, a.pr_3xl]}>
       <View
         style={[
           a.justify_center,
           a.align_center,
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           a.border,
           {
             width: 24,

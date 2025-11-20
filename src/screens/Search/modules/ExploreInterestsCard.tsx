@@ -4,6 +4,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {useInterestsDisplayNames} from '#/lib/interests'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {Nux, useSaveNux} from '#/state/queries/nuxs'
 import {usePreferencesQuery} from '#/state/queries/preferences'
 import {atoms as a, useTheme} from '#/alf'
@@ -22,6 +23,8 @@ export function ExploreInterestsCard() {
   const {mutateAsync: saveNux} = useSaveNux()
   const trendingPrompt = Prompt.usePromptControl()
   const [closing, setClosing] = useState(false)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onClose = () => {
     trendingPrompt.open()
@@ -77,7 +80,7 @@ export function ExploreInterestsCard() {
                   style={[
                     a.justify_center,
                     a.align_center,
-                    a.rounded_full,
+                    enableSquareButtons ? a.rounded_sm : a.rounded_full,
                     t.atoms.bg_contrast_25,
                     a.px_lg,
                     {height: 32},
@@ -111,7 +114,7 @@ export function ExploreInterestsCard() {
             size="small"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             onPress={onClose}
             style={[
               a.absolute,

@@ -7,6 +7,7 @@ import {useLingui} from '@lingui/react'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
 import {useDeviceGeolocationApi} from '#/state/geolocation'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useBreakpoints, useTheme, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
@@ -27,6 +28,8 @@ export function BlockedGeoOverlay() {
   const insets = useSafeAreaInsets()
   const geoDialog = Dialog.useDialogControl()
   const {setDeviceGeolocation} = useDeviceGeolocationApi()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   useEffect(() => {
     // just counting overall hits here
@@ -85,7 +88,7 @@ export function BlockedGeoOverlay() {
                 a.pl_md,
                 a.pr_lg,
                 a.py_sm,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 a.flex_row,
                 a.align_center,
                 a.gap_xs,

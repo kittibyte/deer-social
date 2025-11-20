@@ -10,6 +10,7 @@ import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useTheme} from '#/alf'
 import {atoms as a} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -172,6 +173,8 @@ function ContentInner<T>({
   const {_} = useLingui()
   const [headerHeight, setHeaderHeight] = useState(50)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const render = useCallback(
     ({item, index}: {item: T; index: number}) => {
       return renderItem(item, index, context.value)
@@ -187,13 +190,13 @@ function ContentInner<T>({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}>
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}>
         <ButtonText style={[a.text_md]}>
           <Trans>Done</Trans>
         </ButtonText>
       </Button>
     ),
-    [control, _],
+    [control, _, enableSquareButtons],
   )
 
   return (

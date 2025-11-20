@@ -8,6 +8,7 @@ import {shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useListBlockMutation,
   useListDeleteMutation,
@@ -60,6 +61,8 @@ export function MoreOptionsMenu({
   const isMuting = !!list.viewer?.muted
   const isPinned = Boolean(savedFeedConfig?.pinned)
   const isOwner = currentAccount?.did === list.creator.did
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPressShare = () => {
     const {rkey} = new AtUri(list.uri)
@@ -153,7 +156,7 @@ export function MoreOptionsMenu({
               testID="moreOptionsBtn"
               size="small"
               color="secondary"
-              shape="round"
+              shape={enableSquareButtons ? 'square' : 'round'}
               {...props}>
               <ButtonIcon icon={DotGridIcon} />
             </Button>

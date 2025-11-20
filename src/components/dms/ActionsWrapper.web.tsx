@@ -5,6 +5,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {useConvoActive} from '#/state/messages/convo'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSession} from '#/state/session'
 import * as Toast from '#/view/com/util/Toast'
 import {atoms as a, useTheme} from '#/alf'
@@ -30,6 +31,8 @@ export function ActionsWrapper({
   const {currentAccount} = useSession()
 
   const [showActions, setShowActions] = useState(false)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onMouseEnter = useCallback(() => {
     setShowActions(true)
@@ -99,7 +102,7 @@ export function ActionsWrapper({
                 style={[
                   {opacity: showMenuTrigger},
                   a.p_xs,
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   (state.hovered || state.pressed) && t.atoms.bg_contrast_25,
                 ]}>
                 <EmojiSmileIcon
@@ -121,7 +124,7 @@ export function ActionsWrapper({
                 style={[
                   {opacity: showMenuTrigger},
                   a.p_xs,
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   (state.hovered || state.pressed) && t.atoms.bg_contrast_25,
                 ]}>
                 <DotsHorizontalIcon

@@ -6,6 +6,7 @@ import {useLingui} from '@lingui/react'
 import {PressableScale} from '#/lib/custom-animations/PressableScale'
 import {useHaptics} from '#/lib/haptics'
 import {useHideBottomBarBorderForScreen} from '#/lib/hooks/useHideBottomBarBorder'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useSession} from '#/state/session'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
@@ -27,6 +28,7 @@ export function ThreadComposePrompt({
   const {gtMobile} = useBreakpoints()
   const t = useTheme()
   const playHaptic = useHaptics()
+  const enableSquareButtons = useEnableSquareButtons()
   const {
     state: hovered,
     onIn: onHoverIn,
@@ -76,7 +78,7 @@ export function ThreadComposePrompt({
           a.align_center,
           a.p_sm,
           a.gap_sm,
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           (!gtMobile || hovered) && t.atoms.bg_contrast_25,
           native([a.border, t.atoms.border_contrast_low]),
           a.transition_color,

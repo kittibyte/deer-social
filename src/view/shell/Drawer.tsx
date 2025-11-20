@@ -15,6 +15,7 @@ import {sanitizeHandle} from '#/lib/strings/handles'
 import {colors} from '#/lib/styles'
 import {isWeb} from '#/platform/detection'
 import {emitSoftReset} from '#/state/events'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useKawaiiMode} from '#/state/preferences/kawaii'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useProfileQuery} from '#/state/queries/profile'
@@ -615,6 +616,7 @@ SettingsMenuItem = React.memo(SettingsMenuItem)
 
 function MenuItem({icon, label, count, bold, onPress}: MenuItemProps) {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <Button
       testID={`menuItemButton-${label}`}
@@ -644,7 +646,7 @@ function MenuItem({icon, label, count, bold, onPress}: MenuItemProps) {
                 ]}>
                 <View
                   style={[
-                    a.rounded_full,
+                    enableSquareButtons ? a.rounded_sm : a.rounded_full,
                     {
                       right: count.length === 1 ? 6 : 0,
                       paddingHorizontal: 4,

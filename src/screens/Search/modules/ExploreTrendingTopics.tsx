@@ -5,6 +5,7 @@ import {msg, plural, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useTrendingSettings} from '#/state/preferences/trending'
 import {useGetTrendsQuery} from '#/state/queries/trending/useGetTrendsQuery'
@@ -158,11 +159,14 @@ type TrendingIndicatorType = 'hot' | 'new' | number
 function TrendingIndicator({type}: {type: TrendingIndicatorType | 'skeleton'}) {
   const t = useTheme()
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   const pillStyles = [
     a.flex_row,
     a.align_center,
     a.gap_xs,
-    a.rounded_full,
+    enableSquareButtons ? a.rounded_sm : a.rounded_full,
     {height: 28, paddingHorizontal: 10},
   ]
 
@@ -246,6 +250,8 @@ export function TrendingTopicRowSkeleton({}: {withPosts: boolean}) {
   const t = useTheme()
   const gutters = useGutters([0, 'base'])
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={[
@@ -263,7 +269,7 @@ export function TrendingTopicRowSkeleton({}: {withPosts: boolean}) {
             <LoadingPlaceholder
               width={12}
               height={12}
-              style={[a.rounded_full]}
+              style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
             />
           </View>
           <LoadingPlaceholder width={90} height={17} />

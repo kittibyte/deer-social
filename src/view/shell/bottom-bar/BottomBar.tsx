@@ -21,6 +21,7 @@ import {getTabState, TabState} from '#/lib/routes/helpers'
 import {useGate} from '#/lib/statsig/statsig'
 import {emitSoftReset} from '#/state/events'
 import {useHomeBadge} from '#/state/home-badge'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useUnreadMessageCount} from '#/state/queries/messages/list-conversations'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useProfileQuery} from '#/state/queries/profile'
@@ -396,6 +397,7 @@ function Btn({
   accessibilityHint,
   accessibilityLabel,
 }: BtnProps) {
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <PressableScale
       testID={testID}
@@ -410,11 +412,20 @@ function Btn({
       accessibilityShowsLargeContentViewer>
       {icon}
       {notificationCount ? (
-        <View style={[styles.notificationCount, a.rounded_full]}>
+        <View
+          style={[
+            styles.notificationCount,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
+          ]}>
           <Text style={styles.notificationCountLabel}>{notificationCount}</Text>
         </View>
       ) : hasNew ? (
-        <View style={[styles.hasNewBadge, a.rounded_full]} />
+        <View
+          style={[
+            styles.hasNewBadge,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
+          ]}
+        />
       ) : null}
     </PressableScale>
   )

@@ -16,6 +16,7 @@ import {RemoveScrollBar} from 'react-remove-scroll-bar'
 import {logger} from '#/logger'
 import {useA11y} from '#/state/a11y'
 import {useDialogStateControlContext} from '#/state/dialogs'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, flatten, useBreakpoints, useTheme, web} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
 import {Context} from '#/components/Dialog/context'
@@ -277,6 +278,9 @@ export function FlatListFooter({children}: {children: React.ReactNode}) {
 export function Close() {
   const {_} = useLingui()
   const {close} = React.useContext(Context)
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={[
@@ -291,7 +295,7 @@ export function Close() {
         size="small"
         variant="ghost"
         color="secondary"
-        shape="round"
+        shape={enableSquareButtons ? 'square' : 'round'}
         onPress={() => close()}
         label={_(msg`Close active dialog`)}>
         <ButtonIcon icon={X} size="md" />

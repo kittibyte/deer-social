@@ -12,6 +12,7 @@ import {
   useInterestsDisplayNames,
 } from '#/lib/interests'
 import {type CommonNavigatorParams} from '#/lib/routes/types'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   preferencesQueryKey,
   usePreferencesQuery,
@@ -187,6 +188,8 @@ export function InterestButton({interest}: {interest: Interest}) {
   const interestsDisplayNames = useInterestsDisplayNames()
   const ctx = Toggle.useItemContext()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const styles = useMemo(() => {
     const hovered: ViewStyle[] = [t.atoms.bg_contrast_100]
     const focused: ViewStyle[] = []
@@ -208,7 +211,7 @@ export function InterestButton({interest}: {interest: Interest}) {
   return (
     <View
       style={[
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         a.py_md,
         a.px_xl,
         t.atoms.bg_contrast_50,

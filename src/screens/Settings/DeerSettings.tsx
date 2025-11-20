@@ -62,6 +62,10 @@ import {
   useSetEnableSquareAvatars,
 } from '#/state/preferences/enable-square-avatars'
 import {
+  useEnableSquareButtons,
+  useSetEnableSquareButtons,
+} from '#/state/preferences/enable-square-buttons'
+import {
   useHideFeedsPromoTab,
   useSetHideFeedsPromoTab,
 } from '#/state/preferences/hide-feeds-promo-tab'
@@ -282,6 +286,9 @@ export function DeerSettingsScreen({}: Props) {
 
   const enableSquareAvatars = useEnableSquareAvatars()
   const setEnableSquareAvatars = useSetEnableSquareAvatars()
+
+  const enableSquareButtons = useEnableSquareButtons()
+  const setEnableSquareButtons = useSetEnableSquareButtons()
 
   const constellationInstance = useConstellationInstance()
   const setConstellationInstanceControl = Dialog.useDialogControl()
@@ -599,6 +606,18 @@ export function DeerSettingsScreen({}: Props) {
               style={[a.w_full]}>
               <Toggle.LabelText style={[a.flex_1]}>
                 <Trans>Enable square avatars</Trans>
+              </Toggle.LabelText>
+              <Toggle.Platform />
+            </Toggle.Item>
+
+            <Toggle.Item
+              name="enable_square_buttons"
+              label={_(msg`Enable square buttons`)}
+              value={enableSquareButtons}
+              onChange={value => setEnableSquareButtons(value)}
+              style={[a.w_full]}>
+              <Toggle.LabelText style={[a.flex_1]}>
+                <Trans>Enable square buttons</Trans>
               </Toggle.LabelText>
               <Toggle.Platform />
             </Toggle.Item>

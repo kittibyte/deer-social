@@ -7,6 +7,7 @@ import {useLingui} from '@lingui/react'
 import {useHaptics} from '#/lib/haptics'
 import {makeListLink} from '#/lib/routes/links'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useListBlockMutation, useListMuteMutation} from '#/state/queries/list'
 import {
   useAddSavedFeedsMutation,
@@ -40,6 +41,8 @@ export function Header({
   const isBlocking = !!list.viewer?.blocked
   const isMuting = !!list.viewer?.muted
   const playHaptic = useHaptics()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const {mutateAsync: muteList, isPending: isMutePending} =
     useListMuteMutation()
@@ -157,7 +160,7 @@ export function Header({
             onPress={onTogglePinned}
             disabled={isPending}
             size="small"
-            style={[a.rounded_full]}>
+            style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}>
             {!isPinned && <ButtonIcon icon={isPending ? Loader : PinIcon} />}
             <ButtonText>
               {isPinned ? <Trans>Unpin</Trans> : <Trans>Pin to home</Trans>}
@@ -171,7 +174,7 @@ export function Header({
               label={_(msg`Unblock`)}
               onPress={onUnsubscribeBlock}
               size="small"
-              style={[a.rounded_full]}
+              style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
               disabled={isBlockPending}>
               {isBlockPending && <ButtonIcon icon={Loader} />}
               <ButtonText>
@@ -185,7 +188,7 @@ export function Header({
               label={_(msg`Unmute`)}
               onPress={onUnsubscribeMute}
               size="small"
-              style={[a.rounded_full]}
+              style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
               disabled={isMutePending}>
               {isMutePending && <ButtonIcon icon={Loader} />}
               <ButtonText>

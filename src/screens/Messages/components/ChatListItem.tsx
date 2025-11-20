@@ -22,6 +22,7 @@ import {
 } from '#/lib/strings/url-helpers'
 import {isNative} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {
   precacheConvoQuery,
@@ -104,6 +105,9 @@ function ChatListItemReady({
   const {gtMobile} = useBreakpoints()
   const profile = useProfileShadow(profileUnshadowed)
   const {mutate: markAsRead} = useMarkAsReadMutation()
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   const moderation = React.useMemo(
     () => moderateProfile(profile, moderationOpts),
     [profile, moderationOpts],
@@ -494,7 +498,7 @@ function ChatListItemReady({
                   <View
                     style={[
                       a.absolute,
-                      a.rounded_full,
+                      enableSquareButtons ? a.rounded_sm : a.rounded_full,
                       {
                         backgroundColor: isDimStyle
                           ? t.palette.contrast_200

@@ -7,6 +7,7 @@ import {useLingui} from '@lingui/react'
 
 import {HITSLOP_30} from '#/lib/constants'
 import {useAutoplayDisabled} from '#/state/preferences'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {useIsWithinMessage} from '#/components/dms/MessageContext'
 import {Mute_Stroke2_Corner0_Rounded as MuteIcon} from '#/components/icons/Mute'
@@ -177,11 +178,12 @@ function ControlButton({
   accessibilityHint: string
   style?: StyleProp<ViewStyle>
 }) {
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
         a.absolute,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         a.justify_center,
         {
           backgroundColor: 'rgba(0, 0, 0, 0.5)',

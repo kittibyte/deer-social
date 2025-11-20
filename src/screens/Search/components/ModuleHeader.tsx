@@ -5,6 +5,7 @@ import {type AppBskyFeedDefs, AtUri} from '@atproto/api'
 import {PressableScale} from '#/lib/custom-animations/PressableScale'
 import {makeCustomFeedLink} from '#/lib/routes/links'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {atoms as a, native, useTheme, type ViewStyleProp} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
@@ -126,13 +127,14 @@ export function SearchButton({
   metricsTag: 'suggestedAccounts' | 'suggestedFeeds'
   onPress?: () => void
 }) {
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <Button
       label={label}
       size="small"
       variant="ghost"
       color="secondary"
-      shape="round"
+      shape={enableSquareButtons ? 'square' : 'round'}
       PressableComponent={native(PressableScale)}
       onPress={() => {
         logger.metric(

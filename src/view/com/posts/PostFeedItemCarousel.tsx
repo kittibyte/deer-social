@@ -3,6 +3,7 @@ import {Dimensions, ScrollView, View} from 'react-native'
 import {msg, Plural} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type FeedPostSlice} from '#/state/queries/post-feed'
 import {BlockDrawerGesture} from '#/view/shell/BlockDrawerGesture'
 import {atoms as a, useTheme} from '#/alf'
@@ -22,6 +23,8 @@ export function PostFeedItemCarousel({items}: {items: FeedPostSlice[]}) {
   const {_} = useLingui()
   const ref = React.useRef<ScrollView>(null)
   const [scrollX, setScrollX] = React.useState(0)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const scrollTo = React.useCallback(
     (item: number) => {
@@ -68,7 +71,7 @@ export function PostFeedItemCarousel({items}: {items: FeedPostSlice[]}) {
             size="tiny"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             onPress={() => scrollLeft()}>
             <ButtonIcon icon={ChevronLeft} />
           </Button>
@@ -77,7 +80,7 @@ export function PostFeedItemCarousel({items}: {items: FeedPostSlice[]}) {
             size="tiny"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             onPress={() => scrollRight()}>
             <ButtonIcon icon={ChevronRight} />
           </Button>
@@ -135,6 +138,7 @@ export function PostFeedItemCarousel({items}: {items: FeedPostSlice[]}) {
                       isCarouselItem={true}
                       rootPost={slice.items[0].post}
                       showReplyTo={false}
+                      reqId={undefined}
                     />
                   </View>
                 )

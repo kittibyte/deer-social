@@ -13,6 +13,7 @@ import {ScaleAndFadeIn} from '#/lib/custom-animations/ScaleAndFade'
 import {ShrinkAndPop} from '#/lib/custom-animations/ShrinkAndPop'
 import {useHaptics} from '#/lib/haptics'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Text} from '#/components/Typography'
 
@@ -27,6 +28,8 @@ export function ChatEmptyPill() {
   const [promptIndex, setPromptIndex] = React.useState(lastIndex)
 
   const scale = useSharedValue(1)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const prompts = React.useMemo(() => {
     return [
@@ -79,7 +82,7 @@ export function ChatEmptyPill() {
         style={[
           a.px_xl,
           a.py_md,
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           t.atoms.bg_contrast_25,
           a.align_center,
           animatedStyle,

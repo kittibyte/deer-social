@@ -4,6 +4,7 @@ import {useLingui} from '@lingui/react'
 
 import {useAgeAssurance} from '#/state/ageAssurance/useAgeAssurance'
 import {logger} from '#/state/ageAssurance/util'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
 import {atoms as a, type ViewStyleProp} from '#/alf'
 import {AgeAssuranceAdmonition} from '#/components/ageAssurance/AgeAssuranceAdmonition'
@@ -19,6 +20,8 @@ export function AgeAssuranceDismissibleNotice({style}: ViewStyleProp & {}) {
   const copy = useAgeAssuranceCopy()
   const {mutate: save, variables} = useSaveNux()
   const hidden = !!variables
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   if (!isReady) return null
   if (isDeclaredUnderage) return null
@@ -37,7 +40,7 @@ export function AgeAssuranceDismissibleNotice({style}: ViewStyleProp & {}) {
           size="tiny"
           variant="solid"
           color="secondary_inverted"
-          shape="round"
+          shape={enableSquareButtons ? 'square' : 'round'}
           onPress={() => {
             save({
               id: Nux.AgeAssuranceDismissibleNotice,

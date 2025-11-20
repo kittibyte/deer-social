@@ -7,6 +7,7 @@ import {createHitslop, HITSLOP_10} from '#/lib/constants'
 import {makeProfileLink} from '#/lib/routes/links'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {BlockDrawerGesture} from '#/view/shell/BlockDrawerGesture'
@@ -37,6 +38,8 @@ export function SearchHistory({
 }) {
   const {_} = useLingui()
   const moderationOpts = useModerationOpts()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <Layout.Content
@@ -96,7 +99,7 @@ export function SearchHistory({
                   size="small"
                   variant="ghost"
                   color="secondary"
-                  shape="round">
+                  shape={enableSquareButtons ? 'square' : 'round'}>
                   <ButtonIcon icon={XIcon} />
                 </Button>
               </View>
@@ -128,6 +131,8 @@ function RecentProfileItem({
     moderation.ui('displayName'),
   )
   const verification = useSimpleVerificationState({profile})
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <View style={[a.relative]}>
@@ -169,7 +174,7 @@ function RecentProfileItem({
         size="tiny"
         variant="outline"
         color="secondary"
-        shape="round"
+        shape={enableSquareButtons ? 'square' : 'round'}
         onPress={onRemove}
         style={[
           a.absolute,

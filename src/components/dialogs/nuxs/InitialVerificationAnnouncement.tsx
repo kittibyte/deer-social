@@ -7,6 +7,7 @@ import {useLingui} from '@lingui/react'
 import {urls} from '#/lib/constants'
 import {logger} from '#/logger'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useBreakpoints, useTheme} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
@@ -22,6 +23,8 @@ export function InitialVerificationAnnouncement() {
   const {gtMobile} = useBreakpoints()
   const nuxDialogs = useNuxDialogContext()
   const control = Dialog.useDialogControl()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   Dialog.useAutoOpen(control)
 
@@ -44,7 +47,7 @@ export function InitialVerificationAnnouncement() {
               a.pl_sm,
               a.pr_md,
               a.py_sm,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               a.flex_row,
               a.align_center,
               a.gap_xs,

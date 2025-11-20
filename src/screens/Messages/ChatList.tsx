@@ -17,6 +17,7 @@ import {isNative} from '#/platform/detection'
 import {listenSoftReset} from '#/state/events'
 import {MESSAGE_SCREEN_POLL_INTERVAL} from '#/state/messages/convo/const'
 import {useMessagesEventBus} from '#/state/messages/events'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useLeftConvos} from '#/state/queries/messages/leave-conversation'
 import {useListConvosQuery} from '#/state/queries/messages/list-conversations'
 import {useSession} from '#/state/session'
@@ -363,6 +364,8 @@ function Header({newChatControl}: {newChatControl: DialogControlProps}) {
   const {gtMobile} = useBreakpoints()
   const requireEmailVerification = useRequireEmailVerification()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const openChatControl = useCallback(() => {
     newChatControl.open()
   }, [newChatControl])
@@ -381,7 +384,7 @@ function Header({newChatControl}: {newChatControl: DialogControlProps}) {
       size="small"
       variant="ghost"
       color="secondary"
-      shape="round"
+      shape={enableSquareButtons ? 'square' : 'round'}
       style={[a.justify_center]}>
       <ButtonIcon icon={SettingsIcon} size="lg" />
     </Link>

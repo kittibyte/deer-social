@@ -8,6 +8,7 @@ import {useNavigation} from '@react-navigation/native'
 import {useRequireEmailVerification} from '#/lib/hooks/useRequireEmailVerification'
 import {type NavigationProp} from '#/lib/routes/types'
 import {logEvent} from '#/lib/statsig/statsig'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useGetConvoAvailabilityQuery} from '#/state/queries/messages/get-convo-availability'
 import {useGetConvoForMembers} from '#/state/queries/messages/get-convo-for-members'
 import * as Toast from '#/view/com/util/Toast'
@@ -25,6 +26,8 @@ export function MessageProfileButton({
   const t = useTheme()
   const navigation = useNavigation<NavigationProp>()
   const requireEmailVerification = useRequireEmailVerification()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const {data: convoAvailability} = useGetConvoAvailabilityQuery(profile.did)
   const {mutate: initiateConvo} = useGetConvoForMembers({
@@ -72,7 +75,7 @@ export function MessageProfileButton({
             a.justify_center,
             a.align_center,
             t.atoms.bg_contrast_25,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             // Matches size of button below to avoid layout shift
             {width: 33, height: 33},
           ]}>
@@ -93,7 +96,7 @@ export function MessageProfileButton({
           size="small"
           color="secondary"
           variant="solid"
-          shape="round"
+          shape={enableSquareButtons ? 'square' : 'round'}
           label={_(msg`Message ${profile.handle}`)}
           style={[a.justify_center]}
           onPress={wrappedOnPress}>

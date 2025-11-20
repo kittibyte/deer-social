@@ -5,6 +5,7 @@ import {useLingui} from '@lingui/react'
 
 import {isFirefox, isTouchDevice} from '#/lib/browser'
 import {clamp} from '#/lib/numbers'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme, web} from '#/alf'
 import {useInteractionState} from '#/components/hooks/useInteractionState'
 import {formatTime} from './utils'
@@ -33,6 +34,7 @@ export function Scrubber({
   const {_} = useLingui()
   const t = useTheme()
   const [scrubberActive, setScrubberActive] = useState(false)
+  const enableSquareButtons = useEnableSquareButtons()
   const {
     state: hovered,
     onIn: onStartHover,
@@ -174,7 +176,7 @@ export function Scrubber({
         <View
           style={[
             a.w_full,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             a.overflow_hidden,
             {backgroundColor: 'rgba(255, 255, 255, 0.4)'},
             {height: hovered || scrubberActive ? 6 : 3},
@@ -217,7 +219,7 @@ export function Scrubber({
             style={[
               a.w_full,
               a.h_full,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               {backgroundColor: t.palette.white},
               {
                 transform: [

@@ -10,6 +10,7 @@ import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useListConvosQuery} from '#/state/queries/messages/list-conversations'
 import {useSession} from '#/state/session'
@@ -154,6 +155,7 @@ function RecentChatItem({
 
 function ConvoSkeleton() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
@@ -167,7 +169,7 @@ function ConvoSkeleton() {
         style={[
           t.atoms.bg_contrast_50,
           {width: WIDTH - 8, height: WIDTH - 8},
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
         ]}
       />
       <View

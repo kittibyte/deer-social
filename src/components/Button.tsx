@@ -14,6 +14,7 @@ import {
   type ViewStyle,
 } from 'react-native'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, flatten, select, useTheme} from '#/alf'
 import {type Props as SVGIconProps} from '#/components/icons/common'
 import {Text} from '#/components/Typography'
@@ -150,6 +151,8 @@ export const Button = React.forwardRef<View, ButtonProps>(
     if (!variant && color) {
       variant = 'solid'
     }
+
+    const enableSquareButtons = useEnableSquareButtons()
 
     const t = useTheme()
     const [state, setState] = React.useState({
@@ -440,19 +443,19 @@ export const Button = React.forwardRef<View, ButtonProps>(
 
       if (shape === 'default') {
         if (size === 'large') {
-          baseStyles.push(a.rounded_full, {
+          baseStyles.push(enableSquareButtons ? a.rounded_sm : a.rounded_full, {
             paddingVertical: 12,
             paddingHorizontal: 24,
             gap: 6,
           })
         } else if (size === 'small') {
-          baseStyles.push(a.rounded_full, {
+          baseStyles.push(enableSquareButtons ? a.rounded_sm : a.rounded_full, {
             paddingVertical: 8,
             paddingHorizontal: 14,
             gap: 5,
           })
         } else if (size === 'tiny') {
-          baseStyles.push(a.rounded_full, {
+          baseStyles.push(enableSquareButtons ? a.rounded_sm : a.rounded_full, {
             paddingVertical: 5,
             paddingHorizontal: 10,
             gap: 3,
@@ -507,7 +510,7 @@ export const Button = React.forwardRef<View, ButtonProps>(
         }
 
         if (shape === 'round') {
-          baseStyles.push(a.rounded_full)
+          baseStyles.push(enableSquareButtons ? a.rounded_sm : a.rounded_full)
         } else if (shape === 'square') {
           if (size === 'tiny') {
             baseStyles.push({
@@ -523,7 +526,7 @@ export const Button = React.forwardRef<View, ButtonProps>(
         baseStyles,
         hoverStyles,
       }
-    }, [t, variant, color, size, shape, disabled])
+    }, [t, variant, color, size, shape, disabled, enableSquareButtons])
 
     const context = React.useMemo<ButtonContext>(
       () => ({

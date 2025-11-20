@@ -9,6 +9,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useSession} from '#/state/session'
 import {LoadingPlaceholder} from '#/view/com/util/LoadingPlaceholder'
@@ -144,6 +145,8 @@ export function AvatarStack({
   const widthPerc = 100 / circlesCount
   const [size, setSize] = React.useState<number | null>(null)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const isPending = (numPending && profiles.length === 0) || !moderationOpts
 
   const items = isPending
@@ -186,7 +189,7 @@ export function AvatarStack({
             <View
               onLayout={e => setSize(e.nativeEvent.layout.width)}
               style={[
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 t.atoms.bg_contrast_25,
                 {
                   paddingTop: '100%',
@@ -201,7 +204,9 @@ export function AvatarStack({
                   style={[a.absolute, a.inset_0]}
                 />
               ) : (
-                <MediaInsetBorder style={[a.rounded_full]} />
+                <MediaInsetBorder
+                  style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
+                />
               )}
             </View>
           </View>
@@ -231,7 +236,7 @@ export function AvatarStack({
               style={[
                 a.absolute,
                 a.inset_0,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 a.align_center,
                 a.justify_center,
                 {

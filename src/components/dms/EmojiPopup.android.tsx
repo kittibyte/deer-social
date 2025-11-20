@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
 import {TimesLarge_Stroke2_Corner0_Rounded as CloseIcon} from '#/components/icons/Times'
@@ -20,6 +21,8 @@ export function EmojiPopup({
   const [modalVisible, setModalVisible] = useState(false)
   const {_} = useLingui()
   const t = useTheme()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <>
@@ -60,7 +63,7 @@ export function EmojiPopup({
               size="small"
               variant="ghost"
               color="secondary"
-              shape="round">
+              shape={enableSquareButtons ? 'square' : 'round'}>
               <ButtonIcon icon={CloseIcon} />
             </Button>
           </View>

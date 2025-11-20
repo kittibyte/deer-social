@@ -12,6 +12,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {createHitslop} from '#/lib/constants'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 
 type Props = {
   onRequestClose: () => void
@@ -21,10 +22,14 @@ const HIT_SLOP = createHitslop(16)
 
 const ImageDefaultHeader = ({onRequestClose}: Props) => {
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <SafeAreaView style={styles.root}>
       <TouchableOpacity
-        style={[styles.closeButton, styles.blurredBackground]}
+        style={[
+          enableSquareButtons ? styles.closeButtonSquare : styles.closeButton,
+          styles.blurredBackground,
+        ]}
         onPress={onRequestClose}
         hitSlop={HIT_SLOP}
         accessibilityRole="button"
@@ -50,6 +55,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 22,
+    backgroundColor: '#00000077',
+  },
+  closeButtonSquare: {
+    marginRight: 10,
+    marginTop: 10,
+    width: 44,
+    height: 44,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 11,
     backgroundColor: '#00000077',
   },
   blurredBackground: {

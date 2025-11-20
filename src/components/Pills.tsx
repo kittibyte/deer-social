@@ -4,6 +4,7 @@ import {BSKY_LABELER_DID, type ModerationCause} from '@atproto/api'
 import {Trans} from '@lingui/macro'
 
 import {useModerationCauseDescription} from '#/lib/moderation/useModerationCauseDescription'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {atoms as a, useTheme, type ViewStyleProp} from '#/alf'
 import {Button} from '#/components/Button'
@@ -67,6 +68,8 @@ export function Label({
   const isBlueskyLabel =
     desc.sourceType === 'labeler' && desc.sourceDid === BSKY_LABELER_DID
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const {outer, avi, text} = React.useMemo(() => {
     switch (size) {
       case 'lg': {
@@ -116,7 +119,7 @@ export function Label({
             style={[
               a.flex_row,
               a.align_center,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               outer,
               (hovered || pressed) && t.atoms.bg_contrast_50,
             ]}>

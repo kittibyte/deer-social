@@ -2,6 +2,7 @@ import {createContext, useContext, useMemo} from 'react'
 import {type GestureResponderEvent, type Insets, type View} from 'react-native'
 
 import {useHaptics} from '#/lib/haptics'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, type ButtonProps} from '#/components/Button'
 import {type Props as SVGIconProps} from '#/components/icons/common'
@@ -36,6 +37,8 @@ export function PostControlButton({
 }) {
   const t = useTheme()
   const playHaptic = useHaptics()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const ctx = useMemo(
     () => ({
@@ -82,7 +85,7 @@ export function PostControlButton({
       onLongPress={handleLongPress}
       style={style}
       hoverStyle={t.atoms.bg_contrast_25}
-      shape="round"
+      shape={enableSquareButtons ? 'square' : 'round'}
       variant="ghost"
       color="secondary"
       {...props}

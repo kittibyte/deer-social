@@ -15,6 +15,7 @@ import {usePalette} from '#/lib/hooks/usePalette'
 import {cleanError} from '#/lib/strings/errors'
 import {s} from '#/lib/styles'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {type MyListsFilter, useMyListsQuery} from '#/state/queries/my-lists'
 import {atoms as a, useTheme} from '#/alf'
@@ -49,6 +50,7 @@ export function MyLists({
   const {data, isFetching, isFetched, isError, error, refetch} =
     useMyListsQuery(filter)
   const isEmpty = !isFetching && !data?.length
+  const enableSquareButtons = useEnableSquareButtons()
 
   const items = React.useMemo(() => {
     let items: any[] = []
@@ -107,7 +109,7 @@ export function MyLists({
               style={[
                 a.align_center,
                 a.justify_center,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 t.atoms.bg_contrast_25,
                 {
                   width: 32,
@@ -159,7 +161,7 @@ export function MyLists({
         </View>
       )
     },
-    [t, renderItem, error, onRefresh, emptyText],
+    [t, renderItem, error, onRefresh, emptyText, enableSquareButtons],
   )
 
   if (inline) {

@@ -19,6 +19,7 @@ import {HITSLOP_10, urls} from '#/lib/constants'
 import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle, validateServiceHandle} from '#/lib/strings/handles'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useFetchDid, useUpdateHandleMutation} from '#/state/queries/handle'
 import {RQKEY as RQKEY_PROFILE} from '#/state/queries/profile'
 import {useServiceQuery} from '#/state/queries/service'
@@ -62,6 +63,7 @@ function ChangeHandleDialogInner() {
   const control = Dialog.useDialogContext()
   const {_} = useLingui()
   const agent = useAgent()
+  const enableSquareButtons = useEnableSquareButtons()
   const {
     data: serviceInfo,
     error: serviceInfoError,
@@ -80,13 +82,13 @@ function ChangeHandleDialogInner() {
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}>
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}>
         <ButtonText style={[a.text_md]}>
           <Trans>Cancel</Trans>
         </ButtonText>
       </Button>
     ),
-    [control, _],
+    [control, _, enableSquareButtons],
   )
 
   return (
@@ -624,6 +626,7 @@ function ChangeHandleError({error}: {error: unknown}) {
 function SuccessMessage({text}: {text: string}) {
   const {gtMobile} = useBreakpoints()
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
@@ -639,7 +642,7 @@ function SuccessMessage({text}: {text: string}) {
       <View
         style={[
           {height: 20, width: 20},
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           a.align_center,
           a.justify_center,
           {backgroundColor: t.palette.positive_500},

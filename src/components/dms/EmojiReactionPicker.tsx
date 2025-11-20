@@ -4,6 +4,7 @@ import {type ChatBskyConvoDefs} from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSession} from '#/state/session'
 import {atoms as a, tokens, useTheme} from '#/alf'
 import * as ContextMenu from '#/components/ContextMenu'
@@ -55,12 +56,14 @@ export function EmojiReactionPicker({
 
   const bgColor = t.scheme === 'light' ? t.atoms.bg : t.atoms.bg_contrast_25
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       onLayout={evt => setLayout(evt.nativeEvent.layout)}
       style={[
         bgColor,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         a.absolute,
         {bottom: '100%'},
         isFromSelf ? a.right_0 : a.left_0,
@@ -90,7 +93,7 @@ export function EmojiReactionPicker({
             {hovered => (
               <View
                 style={[
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   hovered
                     ? {
                         backgroundColor: alreadyReacted
@@ -119,7 +122,7 @@ export function EmojiReactionPicker({
         }}>
         <View
           style={[
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             t.scheme === 'light'
               ? t.atoms.bg_contrast_25
               : t.atoms.bg_contrast_50,

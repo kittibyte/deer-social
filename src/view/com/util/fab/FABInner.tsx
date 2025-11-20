@@ -16,6 +16,7 @@ import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {clamp} from '#/lib/numbers'
 import {gradients} from '#/lib/styles'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {ios} from '#/alf'
 import {atoms as a} from '#/alf'
 
@@ -30,6 +31,8 @@ export function FABInner({testID, icon, onPress, style, ...props}: FABProps) {
   const {isMobile, isTablet} = useWebMediaQueries()
   const playHaptic = useHaptics()
   const fabMinimalShellTransform = useMinimalShellFabTransform()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const size = isTablet ? styles.sizeLarge : styles.sizeRegular
 
@@ -57,7 +60,7 @@ export function FABInner({testID, icon, onPress, style, ...props}: FABProps) {
           playHaptic('Heavy')
         })}
         targetScale={0.9}
-        style={[a.rounded_full, style]}
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full, style]}
         {...props}>
         <LinearGradient
           colors={[gradients.blueLight.start, gradients.blueLight.end]}

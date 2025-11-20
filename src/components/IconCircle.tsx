@@ -1,5 +1,6 @@
 import {View} from 'react-native'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   atoms as a,
   type TextStyleProp,
@@ -20,13 +21,14 @@ export function IconCircle({
   iconStyle?: TextStyleProp['style']
 }) {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <View
       style={[
         a.justify_center,
         a.align_center,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         {
           width: size === 'lg' ? 52 : 64,
           height: size === 'lg' ? 52 : 64,

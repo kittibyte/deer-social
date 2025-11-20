@@ -142,6 +142,7 @@ const schema = z.object({
   disableReplyMetrics: z.boolean().optional(),
   hideSimilarAccountsRecomm: z.boolean().optional(),
   enableSquareAvatars: z.boolean().optional(),
+  enableSquareButtons: z.boolean().optional(),
   deerVerification: z
     .object({
       enabled: z.boolean(),
@@ -220,6 +221,7 @@ export const defaults: Schema = {
   disableReplyMetrics: false,
   hideSimilarAccountsRecomm: false,
   enableSquareAvatars: false,
+  enableSquareButtons: false,
   deerVerification: {
     enabled: false,
     // https://social.daniela.lol/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep/post/3lndyqyyr4k2k

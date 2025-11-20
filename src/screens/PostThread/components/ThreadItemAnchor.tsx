@@ -31,6 +31,7 @@ import {useDisableLikesMetrics} from '#/state/preferences/disable-likes-metrics'
 import {useDisableQuotesMetrics} from '#/state/preferences/disable-quotes-metrics'
 import {useDisableRepostsMetrics} from '#/state/preferences/disable-reposts-metrics'
 import {useDisableSavesMetrics} from '#/state/preferences/disable-saves-metrics'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type ThreadItem} from '#/state/queries/usePostThread/types'
 import {useSession} from '#/state/session'
 import {type OnPostSuccessData} from '#/state/shell/composer'
@@ -621,6 +622,7 @@ function BackdatedPostIndicator({post}: {post: AppBskyFeedDefs.PostView}) {
   const t = useTheme()
   const {_, i18n} = useLingui()
   const control = Prompt.usePromptControl()
+  const enableSquareButtons = useEnableSquareButtons()
 
   const indexedAt = new Date(post.indexedAt)
   const createdAt = bsky.dangerousIsType<AppBskyFeedPost.Record>(
@@ -655,7 +657,7 @@ function BackdatedPostIndicator({post}: {post: AppBskyFeedDefs.PostView}) {
             style={[
               a.flex_row,
               a.align_center,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               t.atoms.bg_contrast_25,
               (hovered || pressed) && t.atoms.bg_contrast_50,
               {

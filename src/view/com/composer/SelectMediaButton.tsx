@@ -12,6 +12,7 @@ import {
 import {openUnifiedPicker} from '#/lib/media/picker'
 import {extractDataUriMime} from '#/lib/media/util'
 import {isNative, isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {MAX_IMAGES} from '#/view/com/composer/state/composer'
 import {atoms as a, useTheme} from '#/alf'
 import {Button} from '#/components/Button'
@@ -460,6 +461,8 @@ export function SelectMediaButton({
     selectionCountRemaining,
   ])
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <Button
       testID="openMediaBtn"
@@ -480,7 +483,7 @@ export function SelectMediaButton({
       )}
       style={a.p_sm}
       variant="ghost"
-      shape="round"
+      shape={enableSquareButtons ? 'square' : 'round'}
       color="primary"
       disabled={disabled}>
       <ImageIcon

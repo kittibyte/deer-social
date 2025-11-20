@@ -6,6 +6,7 @@ import {useLingui} from '@lingui/react'
 
 import {logger} from '#/logger'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   usePreferencesQuery,
   useRemoveMutedWordMutation,
@@ -426,6 +427,8 @@ function MutedWordRow({
   const isExpired = expiryDate && expiryDate < new Date()
   const formatDistance = useFormatDistance()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const remove = React.useCallback(async () => {
     control.close()
     removeMutedWord(word)
@@ -529,7 +532,7 @@ function MutedWordRow({
         <Button
           label={_(msg`Remove mute word from your list`)}
           size="tiny"
-          shape="round"
+          shape={enableSquareButtons ? 'square' : 'round'}
           variant="outline"
           color="secondary"
           onPress={() => control.open()}

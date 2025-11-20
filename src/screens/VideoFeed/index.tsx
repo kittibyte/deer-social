@@ -71,6 +71,7 @@ import {
   useFeedFeedbackContext,
 } from '#/state/feed-feedback'
 import {useFeedFeedback} from '#/state/feed-feedback'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useFeedInfo} from '#/state/queries/feed'
 import {usePostLikeMutationQueue} from '#/state/queries/post'
 import {
@@ -1110,6 +1111,7 @@ function EndMessage() {
   const navigation = useNavigation<NavigationProp>()
   const {_} = useLingui()
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View
       style={[
@@ -1123,7 +1125,7 @@ function EndMessage() {
       <View
         style={[
           {height: 100, width: 100},
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           t.atoms.bg_contrast_700,
           a.align_center,
           a.justify_center,

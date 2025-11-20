@@ -10,6 +10,7 @@ import {useLingui} from '@lingui/react'
 
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {DraggableScrollView} from '#/view/com/pager/DraggableScrollView'
 import {atoms as a, tokens, useTheme, web} from '#/alf'
 import {transparentifyColor} from '#/alf/util/colorGeneration'
@@ -52,6 +53,8 @@ export function InterestTabs({
   const [contentWidth, setContentWidth] = useState(0)
   const pendingTabOffsets = useRef<{x: number; width: number}[]>([])
   const [tabOffsets, setTabOffsets] = useState<{x: number; width: number}[]>([])
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onInitialLayout = useNonReactiveCallback(() => {
     const index = interests.indexOf(selectedInterest)
@@ -264,7 +267,7 @@ export function InterestTabs({
               t.atoms.bg,
               a.h_full,
               a.aspect_square,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
             ]}>
             <ButtonIcon icon={ArrowLeft} />
           </Button>
@@ -298,7 +301,7 @@ export function InterestTabs({
               t.atoms.bg,
               a.h_full,
               a.aspect_square,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
             ]}>
             <ButtonIcon icon={ArrowRight} />
           </Button>
@@ -325,6 +328,7 @@ function Tab({
 }) {
   const t = useTheme()
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
   const label = active
     ? _(
         msg({
@@ -355,7 +359,7 @@ function Tab({
         {({hovered, pressed, focused}) => (
           <View
             style={[
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               a.px_lg,
               a.py_sm,
               a.border,

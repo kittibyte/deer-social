@@ -3,6 +3,7 @@ import {type ChatBskyActorDefs} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {AvatarStack} from '#/components/AvatarStack'
 import {ButtonIcon, ButtonText} from '#/components/Button'
@@ -17,6 +18,7 @@ export function InboxPreview({
 }) {
   const {_} = useLingui()
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <Link
       label={_(msg`Chat request inbox`)}
@@ -43,7 +45,7 @@ export function InboxPreview({
           <View
             style={[
               a.absolute,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               a.z_20,
               {
                 top: -4,

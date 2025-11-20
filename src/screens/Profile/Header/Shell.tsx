@@ -23,6 +23,7 @@ import {isIOS} from '#/platform/detection'
 import {type Shadow} from '#/state/cache/types'
 import {useLightboxControls} from '#/state/lightbox'
 import {useEnableSquareAvatars} from '#/state/preferences/enable-square-avatars'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   maybeModifyHighQualityImage,
   useHighQualityImages,
@@ -68,6 +69,7 @@ let ProfileHeaderShell = ({
   const liveStatusControl = useDialogControl()
   const highQualityImages = useHighQualityImages()
   const enableSquareAvatars = useEnableSquareAvatars()
+  const enableSquareButtons = useEnableSquareButtons()
 
   const aviRef = useAnimatedRef()
   const bannerRef = useAnimatedRef()
@@ -233,7 +235,7 @@ let ProfileHeaderShell = ({
                     style={[
                       a.align_center,
                       a.justify_center,
-                      a.rounded_full,
+                      enableSquareButtons ? a.rounded_sm : a.rounded_full,
                       {
                         width: 31,
                         height: 31,

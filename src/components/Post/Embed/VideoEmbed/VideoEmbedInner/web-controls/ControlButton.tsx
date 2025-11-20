@@ -1,5 +1,6 @@
 import {type SvgProps} from 'react-native-svg'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {PressableWithHover} from '#/view/com/util/PressableWithHover'
 import {atoms as a, useTheme, web} from '#/alf'
 
@@ -19,6 +20,7 @@ export function ControlButton({
   onPress: () => void
 }) {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <PressableWithHover
       accessibilityRole="button"
@@ -27,7 +29,7 @@ export function ControlButton({
       onPress={onPress}
       style={[
         a.p_xs,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         web({transition: 'background-color 0.1s'}),
       ]}
       hoverStyle={{backgroundColor: 'rgba(255, 255, 255, 0.2)'}}>

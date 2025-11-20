@@ -8,6 +8,7 @@ import {useActorStatus} from '#/lib/actor-status'
 import {isJwtExpired} from '#/lib/jwt'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useProfilesQuery} from '#/state/queries/profile'
 import {type SessionAccount, useSession} from '#/state/session'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
@@ -34,6 +35,7 @@ export function AccountList({
   const {currentAccount, accounts} = useSession()
   const t = useTheme()
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
   const {data: profiles} = useProfilesQuery({
     handles: accounts.map(acc => acc.did),
   })
@@ -81,7 +83,7 @@ export function AccountList({
             <View
               style={[
                 t.atoms.bg_contrast_25,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 {width: 48, height: 48},
                 a.justify_center,
                 a.align_center,
@@ -117,6 +119,7 @@ function AccountItem({
   const {_} = useLingui()
   const verification = useSimpleVerificationState({profile})
   const {isActive: live} = useActorStatus(profile)
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPress = useCallback(() => {
     onSelect(account)
@@ -201,7 +204,7 @@ function AccountItem({
                   height: 20,
                   backgroundColor: t.palette.positive_500,
                 },
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 a.justify_center,
                 a.align_center,
               ]}>

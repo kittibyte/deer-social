@@ -3,6 +3,7 @@ import {useLingui} from '@lingui/react'
 
 import {HITSLOP_10} from '#/lib/constants'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type ThreadPreferences} from '#/state/queries/preferences/useThreadPreferences'
 import {Button, ButtonIcon} from '#/components/Button'
 import {SettingsSliderVertical_Stroke2_Corner0_Rounded as SettingsSlider} from '#/components/icons/SettingsSlider'
@@ -18,6 +19,9 @@ export function HeaderDropdown({
   'sort' | 'setSort' | 'view' | 'setView'
 >): React.ReactNode {
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <Menu.Root>
       <Menu.Trigger label={_(msg`Thread options`)}>
@@ -27,7 +31,7 @@ export function HeaderDropdown({
             size="small"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             hitSlop={HITSLOP_10}
             onPress={() => {
               logger.metric('thread:click:headerMenuOpen', {})

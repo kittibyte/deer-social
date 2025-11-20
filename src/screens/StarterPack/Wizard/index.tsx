@@ -32,6 +32,7 @@ import {
 } from '#/lib/strings/starter-pack'
 import {logger} from '#/logger'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useAllListMembersQuery} from '#/state/queries/list-members'
 import {useProfileQuery} from '#/state/queries/profile'
@@ -417,6 +418,7 @@ function Footer({
   const {bottom: bottomInset} = useSafeAreaInsets()
   const {currentAccount} = useSession()
   const items = state.currentStep === 'Profiles' ? state.profiles : state.feeds
+  const enableSquareButtons = useEnableSquareButtons()
 
   const minimumItems = state.currentStep === 'Profiles' ? 8 : 0
 
@@ -459,7 +461,7 @@ function Footer({
           <View
             key={index}
             style={[
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               {
                 borderWidth: 0.5,
                 borderColor: t.atoms.bg.backgroundColor,

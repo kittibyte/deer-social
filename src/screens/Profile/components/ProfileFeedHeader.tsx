@@ -12,6 +12,7 @@ import {sanitizeHandle} from '#/lib/strings/handles'
 import {toShareUrl} from '#/lib/strings/url-helpers'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type FeedSourceFeedInfo} from '#/state/queries/feed'
 import {useLikeMutation, useUnlikeMutation} from '#/state/queries/like'
 import {
@@ -55,6 +56,7 @@ import {Text} from '#/components/Typography'
 
 export function ProfileFeedHeaderSkeleton() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <Layout.Header.Outer>
@@ -69,7 +71,7 @@ export function ProfileFeedHeaderSkeleton() {
           style={[
             a.justify_center,
             a.align_center,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             t.atoms.bg_contrast_25,
             {
               height: 34,
@@ -400,6 +402,8 @@ function DialogInner({
   const isLiked = !!likeUri
   const feedRkey = React.useMemo(() => new AtUri(info.uri).rkey, [info.uri])
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onToggleLiked = async () => {
     try {
       playHaptic()
@@ -472,7 +476,7 @@ function DialogInner({
           size="small"
           variant="ghost"
           color="secondary"
-          shape="round"
+          shape={enableSquareButtons ? 'square' : 'round'}
           onPress={onPressShare}>
           <ButtonIcon icon={Share} size="lg" />
         </Button>

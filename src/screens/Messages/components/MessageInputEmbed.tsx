@@ -21,6 +21,7 @@ import {
   isBskyPostUrl,
   makeRecordUri,
 } from '#/lib/strings/url-helpers'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {usePostQuery} from '#/state/queries/post'
 import {PostMeta} from '#/view/com/util/PostMeta'
@@ -104,6 +105,8 @@ export function MessageInputEmbed({
 }) {
   const t = useTheme()
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const {data: post, status} = usePostQuery(embedUri)
 
@@ -217,7 +220,7 @@ export function MessageInputEmbed({
         size="tiny"
         variant="solid"
         color="secondary"
-        shape="round">
+        shape={enableSquareButtons ? 'square' : 'round'}>
         <ButtonIcon icon={X} />
       </Button>
     </View>

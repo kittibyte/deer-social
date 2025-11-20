@@ -12,6 +12,7 @@ import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {shareUrl} from '#/lib/sharing'
 import {cleanError} from '#/lib/strings/errors'
 import {enforceLen} from '#/lib/strings/helpers'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSearchPostsQuery} from '#/state/queries/search-posts'
 import {useSetMinimalShellMode} from '#/state/shell'
 import {Pager} from '#/view/com/pager/Pager'
@@ -37,6 +38,8 @@ export default function TopicScreen({
 }: NativeStackScreenProps<CommonNavigatorParams, 'Topic'>) {
   const {topic} = route.params
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const headerTitle = React.useMemo(() => {
     return enforceLen(decodeURIComponent(topic), 24, true, 'middle')
@@ -103,7 +106,7 @@ export default function TopicScreen({
                   size="small"
                   variant="ghost"
                   color="primary"
-                  shape="round"
+                  shape={enableSquareButtons ? 'square' : 'round'}
                   onPress={onShare}
                   hitSlop={HITSLOP_10}
                   style={[{right: -3}]}>

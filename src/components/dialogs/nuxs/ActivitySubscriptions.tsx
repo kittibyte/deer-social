@@ -5,6 +5,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
@@ -17,6 +18,8 @@ export function ActivitySubscriptionsNUX() {
   const {_} = useLingui()
   const nuxDialogs = useNuxDialogContext()
   const control = Dialog.useDialogControl()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   Dialog.useAutoOpen(control)
 
@@ -55,7 +58,7 @@ export function ActivitySubscriptionsNUX() {
               a.pl_sm,
               a.pr_md,
               a.py_sm,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               a.flex_row,
               a.align_center,
               a.gap_xs,

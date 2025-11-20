@@ -4,6 +4,7 @@ import {useLingui} from '@lingui/react'
 
 import {useAgeAssurance} from '#/state/ageAssurance/useAgeAssurance'
 import {logger} from '#/state/ageAssurance/util'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, select, useTheme, type ViewStyleProp} from '#/alf'
 import {useDialogControl} from '#/components/ageAssurance/AgeAssuranceInitDialog'
 import type * as Dialog from '#/components/Dialog'
@@ -38,6 +39,7 @@ function Inner({
 }) {
   const t = useTheme()
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <>
@@ -67,7 +69,7 @@ function Inner({
             style={[
               a.align_center,
               a.justify_center,
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               {
                 width: 32,
                 height: 32,

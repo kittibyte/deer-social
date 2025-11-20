@@ -29,6 +29,7 @@ import {getStarterPackOgCard} from '#/lib/strings/starter-pack'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
 import {updateProfileShadow} from '#/state/cache/profile-shadow'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {getAllListMembers} from '#/state/queries/list-members'
 import {useResolvedStarterPackShortLink} from '#/state/queries/resolve-short-link'
@@ -522,6 +523,8 @@ function OverflowMenu({
   const deleteDialogControl = useDialogControl()
   const navigation = useNavigation<NavigationProp>()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const {
     mutate: deleteStarterPack,
     isPending: isDeletePending,
@@ -570,7 +573,7 @@ function OverflowMenu({
               variant="solid"
               color="secondary"
               size="small"
-              shape="round">
+              shape={enableSquareButtons ? 'square' : 'round'}>
               <ButtonIcon icon={Ellipsis} />
             </Button>
           )}

@@ -10,6 +10,7 @@ import {useWarnMaxGraphemeCount} from '#/lib/strings/helpers'
 import {logger} from '#/logger'
 import {type ImageMeta} from '#/state/gallery'
 import {useEnableSquareAvatars} from '#/state/preferences/enable-square-avatars'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useProfileUpdateMutation} from '#/state/queries/profile'
 import {ErrorMessage} from '#/view/com/util/error/ErrorMessage'
 import * as Toast from '#/view/com/util/Toast'
@@ -101,6 +102,7 @@ function DialogInner({
   const {_} = useLingui()
   const t = useTheme()
   const control = Dialog.useDialogContext()
+  const enableSquareButtons = useEnableSquareButtons()
   const verification = useSimpleVerificationState({
     profile,
   })
@@ -223,14 +225,14 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
         testID="editProfileCancelBtn">
         <ButtonText style={[a.text_md]}>
           <Trans>Cancel</Trans>
         </ButtonText>
       </Button>
     ),
-    [onPressCancel, _],
+    [onPressCancel, _, enableSquareButtons],
   )
 
   const saveButton = useCallback(
@@ -247,7 +249,7 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
         testID="editProfileSaveBtn">
         <ButtonText style={[a.text_md, !dirty && t.atoms.text_contrast_low]}>
           <Trans>Save</Trans>
@@ -263,6 +265,7 @@ function DialogInner({
       isUpdatingProfile,
       displayNameTooLong,
       descriptionTooLong,
+      enableSquareButtons,
     ],
   )
 

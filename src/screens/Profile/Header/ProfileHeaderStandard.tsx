@@ -16,6 +16,7 @@ import {sanitizeHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
 import {isIOS} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useProfileBlockMutationQueue,
   useProfileFollowMutationQueue,
@@ -84,6 +85,8 @@ let ProfileHeaderStandard = ({
   const playHaptic = useHaptics()
 
   const editProfileControl = useDialogControl()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPressFollow = () => {
     playHaptic()
@@ -194,7 +197,9 @@ let ProfileHeaderStandard = ({
                   variant="solid"
                   onPress={editProfileControl.open}
                   label={_(msg`Edit profile`)}
-                  style={[a.rounded_full]}>
+                  style={
+                    enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]
+                  }>
                   <ButtonText>
                     <Trans>Edit Profile</Trans>
                   </ButtonText>
@@ -214,7 +219,9 @@ let ProfileHeaderStandard = ({
                   label={_(msg`Unblock`)}
                   disabled={!hasSession}
                   onPress={() => unblockPromptControl.open()}
-                  style={[a.rounded_full]}>
+                  style={
+                    enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]
+                  }>
                   <ButtonText>
                     <Trans context="action">Unblock</Trans>
                   </ButtonText>
@@ -245,7 +252,9 @@ let ProfileHeaderStandard = ({
                   onPress={
                     profile.viewer?.following ? onPressUnfollow : onPressFollow
                   }
-                  style={[a.rounded_full]}>
+                  style={
+                    enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]
+                  }>
                   {!profile.viewer?.following && (
                     <ButtonIcon position="left" icon={Plus} />
                   )}

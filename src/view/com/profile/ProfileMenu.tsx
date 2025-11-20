@@ -20,6 +20,7 @@ import {
   useDeerVerificationTrusted,
   useSetDeerVerificationTrust,
 } from '#/state/preferences/deer-verification'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   RQKEY as profileQueryKey,
   useProfileBlockMutationQueue,
@@ -235,6 +236,8 @@ let ProfileMenu = ({
 
   const status = useActorStatus(profile)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <EventStopper onKeyDown={false}>
       <Menu.Root>
@@ -249,7 +252,7 @@ let ProfileMenu = ({
                 variant="solid"
                 color="secondary"
                 size="small"
-                shape="round">
+                shape={enableSquareButtons ? 'square' : 'round'}>
                 <ButtonIcon icon={Ellipsis} size="sm" />
               </Button>
             )

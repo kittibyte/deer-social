@@ -7,6 +7,7 @@ import {useLingui} from '@lingui/react'
 import {languageName} from '#/locale/helpers'
 import {type Language, LANGUAGES, LANGUAGES_MAP_CODE2} from '#/locale/languages'
 import {isNative, isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   toPostLanguages,
   useLanguagePrefs,
@@ -92,6 +93,8 @@ export function DialogInner({
   const setLangPrefs = useLanguagePrefsApi()
   const t = useTheme()
   const {_} = useLingui()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const handleClose = () => {
     control.close(() => {
@@ -200,7 +203,7 @@ export function DialogInner({
             variant="ghost"
             size="small"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             label={_(msg`Close dialog`)}
             onPress={handleClose}>
             <ButtonIcon icon={XIcon} />

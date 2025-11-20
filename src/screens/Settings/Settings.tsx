@@ -22,6 +22,7 @@ import {isIOS, isNative} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import * as persisted from '#/state/persisted'
 import {clearStorage} from '#/state/persisted'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useDeleteActorDeclaration} from '#/state/queries/messages/actor-declaration'
 import {useProfileQuery, useProfilesQuery} from '#/state/queries/profile'
@@ -601,6 +602,8 @@ function AccountRow({
   const {removeAccount} = useSessionApi()
   const {isActive: live} = useActorStatus(profile)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onSwitchAccount = () => {
     if (pendingDid) return
     onPressSwitchAccount(account, 'Settings')
@@ -638,7 +641,7 @@ function AccountRow({
                   a.absolute,
                   {top: 10, right: tokens.space.lg},
                   a.p_xs,
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   (state.hovered || state.pressed) && t.atoms.bg_contrast_25,
                 ]}>
                 <DotsHorizontal size="md" style={t.atoms.text} />

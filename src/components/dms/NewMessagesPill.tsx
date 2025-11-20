@@ -15,6 +15,7 @@ import {
 } from '#/lib/custom-animations/ScaleAndFade'
 import {useHaptics} from '#/lib/haptics'
 import {isAndroid, isIOS, isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Text} from '#/components/Typography'
 
@@ -32,6 +33,8 @@ export function NewMessagesPill({
   const bottomOffset = isWeb ? 0 : bottomInset + bottomBarHeight
 
   const scale = useSharedValue(1)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPressIn = React.useCallback(() => {
     if (isWeb) return
@@ -68,7 +71,7 @@ export function NewMessagesPill({
       <AnimatedPressable
         style={[
           a.py_sm,
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           a.shadow_sm,
           a.border,
           t.atoms.bg_contrast_50,

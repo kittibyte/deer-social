@@ -14,6 +14,7 @@ import {useLingui} from '@lingui/react'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useActorAutocompleteQuery} from '#/state/queries/actor-autocomplete'
 import {useListConvosQuery} from '#/state/queries/messages/list-conversations'
@@ -85,6 +86,8 @@ export function SearchablePeopleList({
   const inputRef = useRef<TextInput>(null)
 
   const [searchText, setSearchText] = useState('')
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const {
     data: results,
@@ -294,7 +297,7 @@ export function SearchablePeopleList({
             <Button
               label={_(msg`Close`)}
               size="small"
-              shape="round"
+              shape={enableSquareButtons ? 'square' : 'round'}
               variant={isWeb ? 'ghost' : 'solid'}
               color="secondary"
               style={[
@@ -331,6 +334,7 @@ export function SearchablePeopleList({
     title,
     searchText,
     control,
+    enableSquareButtons,
   ])
 
   return (
@@ -423,6 +427,7 @@ function DefaultProfileCard({
 
 function ProfileCardSkeleton() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <View
@@ -436,7 +441,7 @@ function ProfileCardSkeleton() {
       ]}>
       <View
         style={[
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           {width: 42, height: 42},
           t.atoms.bg_contrast_25,
         ]}

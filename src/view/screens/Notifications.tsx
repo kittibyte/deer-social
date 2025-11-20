@@ -16,6 +16,7 @@ import {s} from '#/lib/styles'
 import {logger} from '#/logger'
 import {isNative} from '#/platform/detection'
 import {emitSoftReset, listenSoftReset} from '#/state/events'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {RQKEY as NOTIFS_RQKEY} from '#/state/queries/notifications/feed'
 import {useNotificationSettingsQuery} from '#/state/queries/notifications/settings'
 import {
@@ -60,6 +61,8 @@ export function NotificationsScreen({}: Props) {
   const initialActiveTab = lastActiveTab
   const [activeTab, setActiveTab] = useState(initialActiveTab)
   const isLoading = activeTab === 0 ? isLoadingAll : isLoadingMentions
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onPageSelected = useCallback(
     (index: number) => {
@@ -137,7 +140,7 @@ export function NotificationsScreen({}: Props) {
             size="small"
             variant="ghost"
             color="secondary"
-            shape="round"
+            shape={enableSquareButtons ? 'square' : 'round'}
             style={[a.justify_center]}>
             <ButtonIcon icon={isLoading ? Loader : SettingsIcon} size="lg" />
           </Link>

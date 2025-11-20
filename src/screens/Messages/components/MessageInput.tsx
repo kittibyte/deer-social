@@ -24,6 +24,7 @@ import {
   useMessageDraft,
   useSaveMessageDraft,
 } from '#/state/messages/message-drafts'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type EmojiPickerPosition} from '#/view/com/composer/text-input/web/EmojiPicker'
 import * as Toast from '#/view/com/util/Toast'
 import {android, atoms as a, useTheme} from '#/alf'
@@ -64,6 +65,8 @@ export function MessageInput({
   const [shouldEnforceClear, setShouldEnforceClear] = useState(false)
 
   const {needsEmailVerification} = useEmail()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   useSaveMessageDraft(message)
   useExtractEmbedFromFacets(message, setEmbed)
@@ -193,7 +196,7 @@ export function MessageInput({
           accessibilityHint=""
           hitSlop={HITSLOP_10}
           style={[
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             a.align_center,
             a.justify_center,
             {height: 30, width: 30, backgroundColor: t.palette.primary_500},

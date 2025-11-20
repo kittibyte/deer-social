@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import {logger} from '#/logger'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useProfileFollowMutationQueue,
   useProfileQuery,
@@ -45,6 +46,8 @@ function PostThreadFollowBtnLoaded({
   const isFollowing = !!profile.viewer?.following
   const isFollowedBy = !!profile.viewer?.followedBy
   const [wasFollowing, setWasFollowing] = React.useState<boolean>(isFollowing)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   // This prevents the button from disappearing as soon as we follow.
   const showFollowBtn = React.useMemo(
@@ -115,7 +118,7 @@ function PostThreadFollowBtnLoaded({
       size="small"
       variant="solid"
       color={isFollowing ? 'secondary' : 'secondary_inverted'}
-      style={[a.rounded_full]}>
+      style={enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]}>
       {gtMobile && (
         <ButtonIcon
           icon={isFollowing ? Check : Plus}

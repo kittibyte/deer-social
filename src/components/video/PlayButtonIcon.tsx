@@ -1,5 +1,6 @@
 import {View} from 'react-native'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Play_Filled_Corner0_Rounded as PlayIcon} from '#/components/icons/Play'
 
@@ -8,11 +9,13 @@ export function PlayButtonIcon({size = 32}: {size?: number}) {
   const bg = t.name === 'light' ? t.palette.contrast_25 : t.palette.contrast_975
   const fg = t.name === 'light' ? t.palette.contrast_975 : t.palette.contrast_25
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <>
       <View
         style={[
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           {
             backgroundColor: bg,
             shadowColor: 'black',

@@ -8,6 +8,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {VIDEO_FEED_URI} from '#/lib/constants'
 import {makeCustomFeedLink} from '#/lib/routes/links'
 import {logEvent} from '#/lib/statsig/statsig'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useTrendingSettingsApi} from '#/state/preferences/trending'
 import {usePostFeedQuery} from '#/state/queries/post-feed'
 import {RQKEY} from '#/state/queries/post-feed'
@@ -191,6 +192,8 @@ function ViewMoreCard() {
     return makeCustomFeedLink(urip.host, urip.rkey, undefined, 'discover')
   }, [])
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View style={[{width: CARD_WIDTH * 2}]}>
       <Link
@@ -222,7 +225,7 @@ function ViewMoreCard() {
             <Button
               color="primary"
               size="small"
-              shape="round"
+              shape={enableSquareButtons ? 'square' : 'round'}
               label={_(msg`View more trending videos`)}>
               <ButtonIcon icon={ChevronRight} />
             </Button>

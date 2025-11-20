@@ -18,6 +18,7 @@ import {type Dimensions} from '#/lib/media/types'
 import {colors, s} from '#/lib/styles'
 import {isNative} from '#/platform/detection'
 import {type ComposerImage, cropImage} from '#/state/gallery'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {Text} from '#/view/com/util/text/Text'
 import {tokens, useTheme} from '#/alf'
 import * as Dialog from '#/components/Dialog'
@@ -144,6 +145,8 @@ const GalleryItem = ({
   const altTextControl = Dialog.useDialogControl()
   const editControl = Dialog.useDialogControl()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onImageEdit = () => {
     if (isNative) {
       cropImage(image).then(next => {
@@ -195,7 +198,11 @@ const GalleryItem = ({
           accessibilityLabel={_(msg`Edit image`)}
           accessibilityHint=""
           onPress={onImageEdit}
-          style={styles.imageControl}>
+          style={
+            enableSquareButtons
+              ? styles.imageControlSquare
+              : styles.imageControl
+          }>
           <FontAwesomeIcon icon="pen" size={12} style={{color: colors.white}} />
         </TouchableOpacity>
         <TouchableOpacity
@@ -204,7 +211,11 @@ const GalleryItem = ({
           accessibilityLabel={_(msg`Remove image`)}
           accessibilityHint=""
           onPress={onRemove}
-          style={styles.imageControl}>
+          style={
+            enableSquareButtons
+              ? styles.imageControlSquare
+              : styles.imageControl
+          }>
           <FontAwesomeIcon
             icon="xmark"
             size={16}
@@ -281,6 +292,14 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: tokens.borderRadius.md,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageControlSquare: {
+    width: 24,
+    height: 24,
+    borderRadius: tokens.borderRadius.sm,
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
     alignItems: 'center',
     justifyContent: 'center',

@@ -6,6 +6,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {DropdownMenu} from 'radix-ui'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSession} from '#/state/session'
 import {type Emoji} from '#/view/com/composer/text-input/web/EmojiPicker'
 import {useWebPreloadEmoji} from '#/view/com/composer/text-input/web/useWebPreloadEmoji'
@@ -55,6 +56,8 @@ function MenuInner({
 
   const [prevOpen, setPrevOpen] = useState(control.isOpen)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   if (control.isOpen !== prevOpen) {
     setPrevOpen(control.isOpen)
     if (!control.isOpen) {
@@ -87,7 +90,7 @@ function MenuInner({
       </DropdownMenu.Content>
     </DropdownMenu.Portal>
   ) : (
-    <Menu.Outer style={[a.rounded_full]}>
+    <Menu.Outer style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}>
       <View style={[a.flex_row, a.gap_xs]}>
         {['👍', '😆', '❤️', '👀', '😢'].map(emoji => {
           const alreadyReacted = hasAlreadyReacted(
@@ -109,7 +112,7 @@ function MenuInner({
               style={flatten([
                 a.flex,
                 a.flex_col,
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 a.justify_center,
                 a.align_center,
                 a.transition_transform,
@@ -135,7 +138,7 @@ function MenuInner({
             role="button"
             onPress={() => setExpanded(true)}
             style={flatten([
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               {height: 34, width: 34},
               a.justify_center,
               a.align_center,

@@ -5,6 +5,7 @@ import {type AppBskyEmbedVideo} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {ErrorBoundary} from '#/view/com/util/ErrorBoundary'
 import {ConstrainedImage} from '#/view/com/util/images/AutoSizedImage'
 import {atoms as a} from '#/alf'
@@ -66,6 +67,8 @@ function InnerWrapper({embed}: Props) {
   const {_} = useLingui()
   const ref = useRef<{togglePlayback: () => void}>(null)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const [status, setStatus] = useState<'playing' | 'paused' | 'pending'>(
     'pending',
   )
@@ -116,7 +119,7 @@ function InnerWrapper({embed}: Props) {
             {showSpinner ? (
               <View
                 style={[
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   a.p_xs,
                   a.align_center,
                   a.justify_center,

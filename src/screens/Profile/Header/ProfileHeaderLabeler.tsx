@@ -18,6 +18,7 @@ import {logger} from '#/logger'
 import {isIOS} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {type Shadow} from '#/state/cache/types'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useLabelerSubscriptionMutation} from '#/state/queries/labeler'
 import {useLikeMutation, useUnlikeMutation} from '#/state/queries/like'
 import {usePreferencesQuery} from '#/state/queries/preferences'
@@ -67,6 +68,8 @@ let ProfileHeaderLabeler = ({
   const playHaptic = useHaptics()
   const cantSubscribePrompt = Prompt.usePromptControl()
   const isSelf = currentAccount?.did === profile.did
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const moderation = useMemo(
     () => moderateProfile(profile, moderationOpts),
@@ -179,7 +182,7 @@ let ProfileHeaderLabeler = ({
                 variant="solid"
                 onPress={editProfileControl.open}
                 label={_(msg`Edit profile`)}
-                style={a.rounded_full}>
+                style={enableSquareButtons ? a.rounded_sm : a.rounded_full}>
                 <ButtonText>
                   <Trans>Edit Profile</Trans>
                 </ButtonText>
@@ -266,7 +269,7 @@ let ProfileHeaderLabeler = ({
                   size="small"
                   color="secondary"
                   variant="solid"
-                  shape="round"
+                  shape={enableSquareButtons ? 'square' : 'round'}
                   label={_(msg`Like this labeler`)}
                   disabled={!hasSession || isLikePending || isUnlikePending}
                   onPress={onToggleLiked}>

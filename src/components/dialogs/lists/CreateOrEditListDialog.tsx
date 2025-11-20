@@ -11,6 +11,7 @@ import {shortenLinks, stripInvalidMentions} from '#/lib/strings/rich-text-manip'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
 import {type ImageMeta} from '#/state/gallery'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   useListCreateMutation,
   useListMetadataMutation,
@@ -119,6 +120,8 @@ function DialogInner({
     return 'app.bsky.graph.defs#curatelist'
   }, [list, purpose])
   const isCurateList = activePurpose === 'app.bsky.graph.defs#curatelist'
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const {_} = useLingui()
   const t = useTheme()
@@ -276,14 +279,14 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
         testID="editProfileCancelBtn">
         <ButtonText style={[a.text_md]}>
           <Trans>Cancel</Trans>
         </ButtonText>
       </Button>
     ),
-    [onPressCancel, _],
+    [onPressCancel, _, enableSquareButtons],
   )
 
   const saveButton = useCallback(
@@ -301,7 +304,7 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
         testID="editProfileSaveBtn">
         <ButtonText style={[a.text_md, !dirty && t.atoms.text_contrast_low]}>
           <Trans>Save</Trans>
@@ -318,6 +321,7 @@ function DialogInner({
       isUpdatingList,
       displayNameTooLong,
       descriptionTooLong,
+      enableSquareButtons,
     ],
   )
 

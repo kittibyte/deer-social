@@ -11,6 +11,7 @@ import Animated, {Easing, LinearTransition} from 'react-native-reanimated'
 import {HITSLOP_10} from '#/lib/constants'
 import {useHaptics} from '#/lib/haptics'
 import {isNative} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   atoms as a,
   native,
@@ -395,6 +396,7 @@ export function Checkbox() {
 export function Switch() {
   const t = useTheme()
   const {selected, hovered, disabled, isInvalid} = useItemContext()
+  const enableSquareButtons = useEnableSquareButtons()
   const {baseStyles, baseHoverStyles, indicatorStyles} = useMemo(() => {
     const base: ViewStyle[] = []
     const baseHover: ViewStyle[] = []
@@ -469,7 +471,7 @@ export function Switch() {
     <View
       style={[
         a.relative,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         t.atoms.bg,
         {
           height: 28,
@@ -488,7 +490,7 @@ export function Switch() {
           }),
         ).easing(Easing.inOut(Easing.cubic))}
         style={[
-          a.rounded_full,
+          enableSquareButtons ? a.rounded_sm : a.rounded_full,
           {
             backgroundColor: t.palette.white,
             height: 22,
@@ -504,6 +506,7 @@ export function Switch() {
 
 export function Radio() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   const {selected, hovered, focused, disabled, isInvalid} =
     useContext(ItemContext)
   const {baseStyles, baseHoverStyles, indicatorStyles} =
@@ -520,7 +523,7 @@ export function Radio() {
       style={[
         a.justify_center,
         a.align_center,
-        a.rounded_full,
+        enableSquareButtons ? a.rounded_sm : a.rounded_full,
         t.atoms.border_contrast_high,
         a.transition_color,
         {
@@ -536,7 +539,7 @@ export function Radio() {
         <View
           style={[
             a.absolute,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             {height: 12, width: 12},
             {backgroundColor: t.palette.white},
             indicatorStyles,

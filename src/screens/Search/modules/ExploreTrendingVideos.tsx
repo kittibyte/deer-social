@@ -9,6 +9,7 @@ import {useQueryClient} from '@tanstack/react-query'
 import {VIDEO_FEED_URI} from '#/lib/constants'
 import {makeCustomFeedLink} from '#/lib/routes/links'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {RQKEY, usePostFeedQuery} from '#/state/queries/post-feed'
 import {BlockDrawerGesture} from '#/view/shell/BlockDrawerGesture'
 import {atoms as a, tokens, useGutters, useTheme} from '#/alf'
@@ -151,6 +152,7 @@ function VideoCards({
 }) {
   const t = useTheme()
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
   const items = useMemo(() => {
     return data.pages
       .flatMap(page => page.slices)
@@ -215,7 +217,7 @@ function VideoCards({
                 style={[
                   a.align_center,
                   a.justify_center,
-                  a.rounded_full,
+                  enableSquareButtons ? a.rounded_sm : a.rounded_full,
                   {
                     width: 34,
                     height: 34,

@@ -7,6 +7,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {usePalette} from '#/lib/hooks/usePalette'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {ArrowRotateCounterClockwise_Stroke2_Corner0_Rounded as ArrowRotateCounterClockwiseIcon} from '#/components/icons/ArrowRotateCounterClockwise'
@@ -31,6 +32,7 @@ export function ErrorScreen({
   const t = useTheme()
   const pal = usePalette('default')
   const {_} = useLingui()
+  const enableSquareButtons = useEnableSquareButtons()
 
   return (
     <Layout.Center testID={testID}>
@@ -49,7 +51,7 @@ export function ErrorScreen({
         <View style={[a.mb_md, a.align_center]}>
           <View
             style={[
-              a.rounded_full,
+              enableSquareButtons ? a.rounded_sm : a.rounded_full,
               {width: 50, height: 50},
               a.align_center,
               a.justify_center,

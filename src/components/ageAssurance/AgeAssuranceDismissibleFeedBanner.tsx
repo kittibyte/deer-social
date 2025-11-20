@@ -5,6 +5,7 @@ import {useLingui} from '@lingui/react'
 
 import {useAgeAssurance} from '#/state/ageAssurance/useAgeAssurance'
 import {logger} from '#/state/ageAssurance/util'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
 import {atoms as a, select, useTheme} from '#/alf'
 import {useAgeAssuranceCopy} from '#/components/ageAssurance/useAgeAssuranceCopy'
@@ -55,6 +56,8 @@ export function AgeAssuranceDismissibleFeedBanner() {
   const {visible, close} = useInternalState()
   const copy = useAgeAssuranceCopy()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   if (!visible) return null
 
   return (
@@ -82,7 +85,7 @@ export function AgeAssuranceDismissibleFeedBanner() {
           style={[
             a.align_center,
             a.justify_center,
-            a.rounded_full,
+            enableSquareButtons ? a.rounded_sm : a.rounded_full,
             {
               width: 42,
               height: 42,

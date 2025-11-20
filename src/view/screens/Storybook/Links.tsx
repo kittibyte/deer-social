@@ -1,5 +1,6 @@
 import {View} from 'react-native'
 
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {ButtonText} from '#/components/Button'
 import {InlineLinkText, Link} from '#/components/Link'
@@ -7,6 +8,7 @@ import {H1, Text} from '#/components/Typography'
 
 export function Links() {
   const t = useTheme()
+  const enableSquareButtons = useEnableSquareButtons()
   return (
     <View style={[a.gap_md, a.align_start]}>
       <H1>Links</H1>
@@ -55,7 +57,7 @@ export function Links() {
             <View
               style={[
                 {width: 32, height: 32},
-                a.rounded_full,
+                enableSquareButtons ? a.rounded_sm : a.rounded_full,
                 t.atoms.bg_contrast_200,
               ]}
             />

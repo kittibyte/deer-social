@@ -6,6 +6,7 @@ import {useLingui} from '@lingui/react'
 import {urls} from '#/lib/constants'
 import {getUserDisplayName} from '#/lib/getUserDisplayName'
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useSession} from '#/state/session'
@@ -194,6 +195,8 @@ function VerifierCard({
   const verificationRemovePromptControl = useDialogControl()
   const canAdminister = verification.issuer === currentAccount?.did
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   return (
     <View
       style={{
@@ -253,7 +256,7 @@ function VerifierCard({
                     size="small"
                     variant="outline"
                     color="negative"
-                    shape="round"
+                    shape={enableSquareButtons ? 'square' : 'round'}
                     onPress={() => {
                       verificationRemovePromptControl.open()
                     }}>

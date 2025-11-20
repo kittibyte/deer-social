@@ -4,6 +4,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {logEvent} from '#/lib/statsig/statsig'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {type Gif} from '#/state/queries/tenor'
 import {atoms as a, useTheme} from '#/alf'
 import {Button} from '#/components/Button'
@@ -21,6 +22,8 @@ export function SelectGifBtn({onClose, onSelectGif, disabled}: Props) {
   const ref = useRef<{open: () => void}>(null)
   const t = useTheme()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onPressSelectGif = useCallback(async () => {
     logEvent('composer:gif:open', {})
     Keyboard.dismiss()
@@ -36,7 +39,7 @@ export function SelectGifBtn({onClose, onSelectGif, disabled}: Props) {
         accessibilityHint={_(msg`Opens GIF select dialog`)}
         style={a.p_sm}
         variant="ghost"
-        shape="round"
+        shape={enableSquareButtons ? 'square' : 'round'}
         color="primary"
         disabled={disabled}>
         <GifIcon size="lg" style={disabled && t.atoms.text_contrast_low} />

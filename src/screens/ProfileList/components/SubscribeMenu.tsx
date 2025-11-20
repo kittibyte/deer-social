@@ -3,6 +3,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {logger} from '#/logger'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useListBlockMutation, useListMuteMutation} from '#/state/queries/list'
 import {atoms as a} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -24,6 +25,8 @@ export function SubscribeMenu({list}: {list: AppBskyGraphDefs.ListView}) {
     useListBlockMutation()
 
   const isPending = isMutePending || isBlockPending
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   const onSubscribeMute = async () => {
     try {
@@ -73,7 +76,7 @@ export function SubscribeMenu({list}: {list: AppBskyGraphDefs.ListView}) {
               testID="subscribeBtn"
               size="small"
               color="primary_subtle"
-              style={[a.rounded_full]}
+              style={[enableSquareButtons ? a.rounded_sm : a.rounded_full]}
               disabled={isPending}
               {...props}>
               {isPending && <ButtonIcon icon={Loader} />}

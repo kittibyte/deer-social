@@ -17,6 +17,7 @@ import {
 import {cleanError} from '#/lib/strings/errors'
 import {s} from '#/lib/styles'
 import {isNative, isWeb} from '#/platform/detection'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {
   type SavedFeedItem,
   useGetPopularFeedsQuery,
@@ -135,6 +136,8 @@ export function FeedsScreen(_props: Props) {
   } = useSearchPopularFeedsMutation()
   const {hasSession} = useSession()
   const listRef = React.useRef<ListMethods>(null)
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   /**
    * A search query is present. We may not have search results yet.
@@ -519,7 +522,7 @@ export function FeedsScreen(_props: Props) {
               size="small"
               variant="ghost"
               color="secondary"
-              shape="round"
+              shape={enableSquareButtons ? 'square' : 'round'}
               style={[a.justify_center, {right: -3}]}>
               <ButtonIcon icon={Gear} size="lg" />
             </Link>

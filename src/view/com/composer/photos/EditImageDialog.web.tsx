@@ -11,6 +11,7 @@ import {
   type ImageTransformation,
   manipulateImage,
 } from '#/state/gallery'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
@@ -37,6 +38,8 @@ function DialogInner({
   const [pending, setPending] = useState(false)
   const ref = useRef<{save: () => Promise<void>}>(null)
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const cancelButton = useCallback(
     () => (
       <Button
@@ -46,14 +49,14 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]}
         testID="cropImageCancelBtn">
         <ButtonText style={[a.text_md]}>
           <Trans>Cancel</Trans>
         </ButtonText>
       </Button>
     ),
-    [control, _, pending],
+    [control, _, pending, enableSquareButtons],
   )
 
   const saveButton = useCallback(
@@ -69,7 +72,7 @@ function DialogInner({
         size="small"
         color="primary"
         variant="ghost"
-        style={[a.rounded_full]}
+        style={enableSquareButtons ? [a.rounded_sm] : [a.rounded_full]}
         testID="cropImageSaveBtn">
         <ButtonText style={[a.text_md]}>
           <Trans>Save</Trans>
@@ -77,7 +80,7 @@ function DialogInner({
         {pending && <ButtonIcon icon={Loader} />}
       </Button>
     ),
-    [_, pending],
+    [_, pending, enableSquareButtons],
   )
 
   return (

@@ -13,6 +13,7 @@ import {shareUrl} from '#/lib/sharing'
 import {cleanError} from '#/lib/strings/errors'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {enforceLen} from '#/lib/strings/helpers'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useSearchPostsQuery} from '#/state/queries/search-posts'
 import {useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
@@ -69,6 +70,8 @@ export default function HashtagScreen({
 
   const [activeTab, setActiveTab] = React.useState(0)
   const setMinimalShellMode = useSetMinimalShellMode()
+
+  const enableSquareButtons = useEnableSquareButtons()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -133,7 +136,7 @@ export default function HashtagScreen({
                   size="small"
                   variant="ghost"
                   color="primary"
-                  shape="round"
+                  shape={enableSquareButtons ? 'square' : 'round'}
                   onPress={onShare}
                   hitSlop={HITSLOP_10}
                   style={[{right: -3}]}>

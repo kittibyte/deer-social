@@ -7,6 +7,7 @@ import {useNavigation} from '@react-navigation/native'
 import {HITSLOP_30} from '#/lib/constants'
 import {type NavigationProp} from '#/lib/routes/types'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {useEnableSquareButtons} from '#/state/preferences/enable-square-buttons'
 import {useFeedSourceInfoQuery} from '#/state/queries/feed'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {type VideoFeedSourceContext} from '#/screens/VideoFeed/types'
@@ -144,6 +145,8 @@ export function BackButton({onPress, style, ...props}: Partial<ButtonProps>) {
   const {_} = useLingui()
   const navigation = useNavigation<NavigationProp>()
 
+  const enableSquareButtons = useEnableSquareButtons()
+
   const onPressBack = useCallback(
     (evt: GestureResponderEvent) => {
       onPress?.(evt)
@@ -164,7 +167,7 @@ export function BackButton({onPress, style, ...props}: Partial<ButtonProps>) {
         size="small"
         variant="ghost"
         color="secondary"
-        shape="round"
+        shape={enableSquareButtons ? 'square' : 'round'}
         onPress={onPressBack}
         hitSlop={HITSLOP_30}
         style={[
