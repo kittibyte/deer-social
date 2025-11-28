@@ -241,6 +241,7 @@ const GalleryItem = ({
         accessibilityIgnoresInvertColors
         cachePolicy="none"
         autoplay={false}
+        contentFit="cover"
       />
 
       <MediaInsetBorder />
@@ -285,7 +286,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   image: {
-    resizeMode: 'cover',
     borderRadius: tokens.borderRadius.md,
   },
   imageControl: {
