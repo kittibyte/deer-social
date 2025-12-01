@@ -1,3 +1,8 @@
+# EOL NOTICE
+Due to personal reasons I have decided to stop working on this fork, tldr: just use [Witchsky](https://witchsky.app/)
+
+Thank you everyone for using my project <3
+
 # social.daniela.lol
 
 This is a fork of the soft fork [deer.social](https://github.com/a-viv-a/deer-social).
