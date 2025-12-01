@@ -12,12 +12,11 @@ import {
 import {useProfileQuery} from '#/state/queries/profile'
 import {type SessionAccount, useSession} from '#/state/session'
 import {useOnboardingState} from '#/state/shell'
-import {BookmarksAnnouncement} from '#/components/dialogs/nuxs/BookmarksAnnouncement'
+import {EOLAnnouncement} from '#/components/dialogs/nuxs/EOLAnnouncement'
 /*
  * NUXs
  */
 import {isSnoozed, snooze, unsnooze} from '#/components/dialogs/nuxs/snoozing'
-import {isExistingUserAsOf} from './utils'
 
 type Context = {
   activeNux: Nux | undefined
@@ -34,13 +33,7 @@ const queuedNuxs: {
   }) => boolean
 }[] = [
   {
-    id: Nux.BookmarksAnnouncement,
-    enabled: ({currentProfile}) => {
-      return isExistingUserAsOf(
-        '2025-09-08T00:00:00.000Z',
-        currentProfile.createdAt,
-      )
-    },
+    id: Nux.EOLAnnouncement,
   },
 ]
 
@@ -119,7 +112,7 @@ function Inner({
   }
 
   React.useEffect(() => {
-    if (snoozed) return // comment this out to test
+    //if (snoozed) return // comment this out to test
     if (!nuxs) return
 
     for (const {id, enabled} of queuedNuxs) {
@@ -127,7 +120,7 @@ function Inner({
 
       // check if completed first
       if (nux && nux.completed) {
-        continue // comment this out to test
+        //continue // comment this out to test
       }
 
       // then check gate (track exposure)
@@ -180,7 +173,7 @@ function Inner({
   return (
     <Context.Provider value={ctx}>
       {/*For example, activeNux === Nux.NeueTypography && <NeueTypography />*/}
-      {activeNux === Nux.BookmarksAnnouncement && <BookmarksAnnouncement />}
+      {activeNux === Nux.EOLAnnouncement && <EOLAnnouncement />}
     </Context.Provider>
   )
 }
